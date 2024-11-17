@@ -2,21 +2,27 @@ import Link from "next/link";
 
 export default function Navigation(){
     return(
-        <div>
-            <ul>
-                <li>
-                    <Link href="/">Home</Link>
-                </li>
-                <li>
-                    <Link href="/apartments">Apartments</Link>
-                </li>
-                <li>
-                    <Link href="/about">About</Link>
-                </li>
-                <li>
-                    <Link href="/account">Your Account</Link>
-                </li>
-            </ul>
-        </div>
+        <nav className="z-10 text-xl">
+        <ul className="flex gap-16 items-center">
+          <li>
+            <Link href="/cabins" className="hover:text-accent-400 transition-colors">
+              Rooms
+            </Link>
+          </li>
+          <li>
+            <Link href="/about" className="hover:text-accent-400 transition-colors">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/account"
+              className="hover:text-accent-400 transition-colors"
+            >
+              Guest area
+            </Link>
+          </li>
+        </ul>
+      </nav>
     );
 };
