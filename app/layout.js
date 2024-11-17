@@ -4,7 +4,12 @@ import Navigation from "./_components/Navigation";
 import "@/app/_styles/globals.css";
 
 export const metadata = {
-  title: "Green Hotel",
+  // title: "Green Hotel",
+  title: {
+    template: "%s / Green Hotel",
+    default: "Welcome in Green Hotel"
+  },
+  description: "Adventure Green Hotel"
 };
 
 export default function RootLayout({ children }) {
