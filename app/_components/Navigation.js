@@ -5,7 +5,7 @@ export default function Navigation(){
         <nav className="z-10 text-xl">
         <ul className="flex gap-16 items-center">
           <li>
-            <Link href="/cabins" className="hover:text-accent-400 transition-colors">
+            <Link href="/apartments" className="hover:text-accent-400 transition-colors">
               Rooms
             </Link>
           </li>
