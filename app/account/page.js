@@ -1,3 +1,11 @@
-export default function Page(){
-    return <h1>Account Page</h1>
-};
+export const metadata = {
+    title: "Account page",
+  };
+
+export default function Page() {
+  return (
+    <h2 className="font-semibold text-2xl text-accent-400 mb-7">
+      Welcome Tihomir
+    </h2>
+  );
+}
