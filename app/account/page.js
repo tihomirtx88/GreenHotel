@@ -1,6 +1,6 @@
 export const metadata = {
-    title: "Account page",
-  };
+  title: "Account page",
+};
 
 export default function Page() {
   return (
