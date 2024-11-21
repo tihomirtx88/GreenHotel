@@ -1,11 +1,16 @@
 import ApartmentCard from "@/app/_components/ApartmentCard";
+import { getCabins } from "../_lib/data-service";
 
 export const metadata = {
     title: "Apartmenst"
 };
 
-export default function Page(){
-    const apartments = [];
+export default async function Page(){
+  console.log("starting");
+  
+    const apartments = await getCabins();
+    console.log(apartments);
+    
 
     return (
       <div>

@@ -1,15 +1,20 @@
 import { UsersIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import Link from "next/link";
 
 function ApartmentCard({ apartment }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = apartment;
 
   return (
     <div className="flex border-primary-800 border">
-      <img
-        src={image}
-        alt={`apartment ${name}`}
-        className="flex-1 border-r border-primary-800"
-      />
+      <div className="flex-1 relative">
+        <Image
+          fill
+          src={image}
+          alt={`apartment ${name}`}
+          className="object-cover border-r border-primary-800"
+        />
+      </div>
 
       <div className="flex-grow">
         <div className="pt-5 pb-4 px-7 bg-primary-950">
@@ -42,12 +47,12 @@ function ApartmentCard({ apartment }) {
         </div>
 
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
-          <a
+          <Link
             href={`/apartments/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
           >
             Details & reservation &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </div>
