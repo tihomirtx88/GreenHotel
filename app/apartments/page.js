@@ -1,7 +1,9 @@
-import { getCabins } from "../_lib/data-service";
 import ApartmentsList from "../_components/ApartmentsList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
+
+//Refresh data affter 36 sec
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Apartmenst",

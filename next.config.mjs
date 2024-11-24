@@ -9,7 +9,8 @@ const nextConfig = {
                 pathname: '/storage/v1/object/public/cabins-images/**'
             }
         ]
-    }
+    }, 
+    // output: "export"
 };
 
 export default nextConfig;
