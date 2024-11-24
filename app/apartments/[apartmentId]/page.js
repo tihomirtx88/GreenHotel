@@ -1,4 +1,4 @@
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
@@ -11,6 +11,15 @@ export async function generateMetadata({params}) {
   return {
     title: `Apartment ${name}`
   }
+}
+
+// To convert this route from dynamic to static
+export async function generateStaticParams() {
+  const apartments = await getCabins();
+  
+  const ids = apartments.map((apartment) => ({apartmentId: String(apartment.id)}));
+
+  return ids;
 }
 
 export default async function Page({ params }) {
