@@ -1,15 +1,20 @@
 import ApartmentsList from "../_components/ApartmentsList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/filter";
 
 //Refresh data affter 36 sec
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Apartmenst",
+  title: "Apartments",
 };
 
-export default async function Page() {
+export default async function Page({searchParams}) {
+
+
+  const filter = searchParams?.capacity ?? "all";
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -24,8 +29,12 @@ export default async function Page() {
         to paradise.
       </p>
 
-      <Suspense fallback={<Spinner/>}>
-        <ApartmentsList />
+      <div className="flex justify-end mb-8">
+        <Filter/>
+      </div>
+
+      <Suspense fallback={<Spinner/>} key={filter}>
+        <ApartmentsList filter={filter}/>
       </Suspense>
     </div>
   );
