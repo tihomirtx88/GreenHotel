@@ -1,7 +1,7 @@
 import ApartmentsList from "../_components/ApartmentsList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
-import Filter from "../_components/filter";
+import Filter from "../_components/Filter";
 
 //Refresh data affter 36 sec
 export const revalidate = 3600;
