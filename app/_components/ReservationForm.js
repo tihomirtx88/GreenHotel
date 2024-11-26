@@ -1,5 +1,5 @@
-export default function ReservationForm() {
-  const maxCapacity = 23;
+export default function ReservationForm({apartment}) {
+  const { maxCapacity } = apartment;
 
   return (
     <div className="scale-[1.01]">
