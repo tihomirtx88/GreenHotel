@@ -1,8 +1,9 @@
-import DateSelector from "@/app/_components/DateSelector";
+import Reservation from "@/app/_components/Reservation";
 import TextExpander from "@/app/_components/TextExpander";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Suspense } from "react";
 
 // export const metadata = {
 //   title: "Apartment"
@@ -25,6 +26,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
+
   const apartment = await getCabin(params.apartmentId);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     apartment;
@@ -74,14 +76,14 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
           Reserve {name} today. Pay on arrival.
         </h2>
-
-        <div>
-          <DateSelector/>
-          
-        </div>
+        
+        <Suspense>
+          <Reservation apartment={apartment}/>
+        </Suspense>
+        
       </div>
     </div>
   );
