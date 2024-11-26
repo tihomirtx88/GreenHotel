@@ -14,7 +14,7 @@ function isAlreadyBooked(range, datesArr) {
   );
 }
 
-export default function DateSelector() {
+export default function DateSelector({settings, bookedDates, apartment}) {
   // CHANGE
   const regularPrice = 23;
   const discount = 23;
@@ -23,15 +23,14 @@ export default function DateSelector() {
   const range = { from: null, to: null };
 
   // SETTINGS
-  const minBookingLength = 1;
-  const maxBookingLength = 23;
+  const { minBokkingLength, maxBookingLength } = settings;
 
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        min={minBookingLength + 1}
+        min={minBokkingLength + 1}
         max={maxBookingLength}
         fromMonth={new Date()}
         fromDate={new Date()}
