@@ -16,7 +16,7 @@ function isAlreadyBooked(range, datesArr) {
 }
 
 export default function DateSelector({settings, bookedDates, apartment}) {
-  const [ range, setRange] = useState({from: undefined, to: undefined});
+
   // CHANGE
   const regularPrice = 23;
   const discount = 23;
