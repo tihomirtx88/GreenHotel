@@ -1,7 +1,10 @@
 "use client"
 
+import { useReservation } from "./ReservationContext";
+
 export default function ReservationForm({apartment}) {
   const { maxCapacity } = apartment;
+  const { range } = useReservation();
 
   return (
     <div className="scale-[1.01]">
@@ -19,6 +22,7 @@ export default function ReservationForm({apartment}) {
           <p>{user.name}</p>
         </div> */}
       </div>
+      <p>{String(range.from)} to {String(range.to)}</p>
 
       <form className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
         <div className="space-y-2">
