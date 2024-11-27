@@ -1,3 +1,5 @@
+"use client"
+
 export default function ReservationForm({apartment}) {
   const { maxCapacity } = apartment;
 
