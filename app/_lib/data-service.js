@@ -84,7 +84,7 @@ export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from('bookings')
     .select(
-      'id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)'
+      'id, created_at, startDate, endDate, numNight, numGuests, totalPrice, guestId, cabinId, cabins(name, image)'
     )
     .eq('guestId', guestId)
     .order('startDate');
