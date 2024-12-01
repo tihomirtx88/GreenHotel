@@ -1,12 +1,16 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileform";
+import { auth } from "@/app/_lib/auth";
+import { getGuest } from "@/app/_lib/data-service";
 
 export const metadata = {
   title: "Profile page",
 };
 
-export default function Page() {
-  const nationality = "portugal";
+export default async function Page() {
+  const session = await auth();
+  const quest = await getGuest(session?.user?.email);
+
   return (
     <div>
       <h2 className="font-semibold text-2xl text-accent-400 mb-4">
@@ -18,12 +22,12 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
       {/* The way how i next.js is possible to pass SC to CC like prop  */}
-      <UpdateProfileForm>
+      <UpdateProfileForm quest= {quest}>
         <SelectCountry
           name="nationality"
           id="nationality"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          defaultCountry={nationality}
+          defaultCountry={quest.nationality}
         />
       </UpdateProfileForm>
     </div>
