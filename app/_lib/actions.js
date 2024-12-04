@@ -1,13 +1,16 @@
 "use server"
 
 import { revalidatePath } from "next/cache";
-import { auth, signIn, signOut } from "./auth"
-import { deleteBooking, getBookings, updateGuest } from "./data-service";
+import { auth, signIn, signOut } from "./auth";
+import { redirect } from "next/navigation";
+import { deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
 
 export async function updateProfile(formData) {
+    // Authentication
     const session = await auth();
     if(!session) throw new Error("You must to be logged!");
-
+    
+    //Authorization
     const nationalID = formData.get('nationalID');
     const [nationality, countryFlag ] = formData.get('nationality').split('%');
 
@@ -20,6 +23,31 @@ export async function updateProfile(formData) {
     revalidatePath("/account/profile");
     
 }
+
+export async function updateReservation(formData){
+    const session = await auth();
+    if(!session) throw new Error("You must to logged in!");
+
+    const bookingId = Number(formData.get('bookingId'));
+
+    const guestBookings = await getBookings(session?.user?.guestId);
+  
+    const guestBookingsId = guestBookings.map((booking) => booking.id);
+
+    if(!guestBookingsId.includes(bookingId)) throw new Error("You are not allowed to delete this reservation");
+
+    const updateData = {
+        numGuests: Number(formData.get('numGuests')),
+        observation: formData.get('observation').slice(0, 1000)
+    };
+
+    await updateBooking(bookingId, updateData);
+
+    revalidatePath('/account/reservations');
+    revalidatePath(`/account/reservations/edit/${bookingId}`);
+
+    redirect('/account/reservations');
+};
 
 export async function signInAction(){
     await signIn('google', {
