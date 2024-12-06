@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
-import { deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
+import { createBooking, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
 
 export async function updateProfile(formData) {
     // Authentication
@@ -47,6 +47,28 @@ export async function updateReservation(formData){
     revalidatePath(`/account/reservations/edit/${bookingId}`);
 
     redirect('/account/reservations');
+};
+
+export async function createReservation(reservationData, formData){
+    const session = await auth();
+    if(!session) throw new Error("You must to logged in!");
+
+    const newBooking = {
+        ...reservationData,
+        guestId: session?.user?.guestId,
+        numGuests: Number(formData.get('numGuests')),
+        observation: formData.get('observation').slice(0, 1000),
+        extrasPrice: 0,
+        totalPrice: reservationData.cabinPrice,
+        isPaid: false,
+        hasBreakfast: false,
+        // Add more inputs for all nessery data 
+        numNight: 1,
+        status: 'unconfirmed'
+    };
+
+    await createBooking(newBooking);
+    revalidatePath(`/apartments/${reservationData.bookingId}`);
 };
 
 export async function signInAction(){
