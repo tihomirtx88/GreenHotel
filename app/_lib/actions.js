@@ -69,6 +69,7 @@ export async function createReservation(reservationData, formData){
 
     await createBooking(newBooking);
     revalidatePath(`/apartments/${reservationData.bookingId}`);
+    redirect('/thankyou');
 };
 
 export async function signInAction(){
