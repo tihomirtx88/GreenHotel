@@ -18,13 +18,20 @@ export async function generateMetadata({ params }) {
 
 // To convert this route from dynamic to static
 export async function generateStaticParams() {
-  const apartments = await getCabins();
+  
 
-  const ids = apartments.map((apartment) => ({
-    apartmentId: String(apartment.id),
-  }));
+  try {
+    const apartments = await getCabins();
 
-  return ids;
+    const ids = apartments.map((apartment) => ({
+      apartmentId: String(apartment.id),
+    }));
+  
+    return ids;
+  } catch (error) {
+    console.error("Failed to fetch cabins during build:", error);
+    return []; 
+  }
 }
 
 export default async function Page({ params }) {
