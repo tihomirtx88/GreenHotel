@@ -60,9 +60,8 @@ export async function createReservation(reservationData, formData){
         observation: formData.get('observation').slice(0, 1000),
         extrasPrice: 0,
         totalPrice: reservationData.cabinPrice,
-        isPaid: false,
-        hasBreakfast: false,
-        // Add more inputs for all nessery data 
+        isPaid: reservationData.isPaid, 
+        hasBreakfast: reservationData.hasBreakfast,
         numNight: 1,
         status: 'unconfirmed'
     };
