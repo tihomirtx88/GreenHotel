@@ -12,7 +12,7 @@ export default function ReservationForm({ apartment, user }) {
   const startDate = range.from;
   const endDate = range.to;
 
-  const numNight = differenceInDays(endDate, startDate);
+  const numNight = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
   const cabinPrice = numNight * (regularPrice - discount);
 
   const reservationData = {
@@ -20,6 +20,9 @@ export default function ReservationForm({ apartment, user }) {
     endDate,
     cabinPrice,
     cabinId: id,
+    numNight,
+    status: "unconfirmed", 
+    hasBreakfast,
   };
 
   const createBookingWithData = createReservation.bind(null, reservationData);
@@ -77,6 +80,30 @@ export default function ReservationForm({ apartment, user }) {
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
             placeholder="Any pets, allergies, special requirements, etc.?"
           />
+        </div>
+
+   
+         <div className="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            id="hasBreakfast"
+            checked={hasBreakfast}
+            onChange={(e) => setHasBreakfast(e.target.checked)}
+            className="w-5 h-5"
+          />
+          <label htmlFor="hasBreakfast">Include Breakfast?</label>
+        </div>
+
+    
+        <div className="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            id="isPaid"
+            checked={isPaid}
+            onChange={(e) => setIsPaid(e.target.checked)}
+            className="w-5 h-5"
+          />
+          <label htmlFor="isPaid">Mark as Paid?</label>
         </div>
 
         <div className="flex justify-end items-center gap-6">
