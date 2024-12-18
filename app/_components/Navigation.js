@@ -41,6 +41,24 @@ export default async function Navigation() {
             </Link>
           )}
         </li>
+        <li>
+          {session?.user?.image ? (
+            <Link
+              href="/adminPanel"
+              className="hover:text-accent-400 transition-colors flex items-center gap-4"
+            >
+              <img className="h-8 rounded-full" src={session.user.image} alt={session.user.name} referrerPolicy="no-referrer"/>
+              <span>Admin area</span>
+            </Link>
+          ) : (
+            <Link
+              href="/adminPanel"
+              className="hover:text-accent-400 transition-colors"
+            >
+              Admin area
+            </Link>
+          )}
+        </li>
       </ul>
     </nav>
   );

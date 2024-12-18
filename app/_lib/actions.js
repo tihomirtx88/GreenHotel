@@ -62,7 +62,7 @@ export async function createReservation(reservationData, formData){
         totalPrice: reservationData.cabinPrice,
         isPaid: reservationData.isPaid, 
         hasBreakfast: reservationData.hasBreakfast,
-        numNight: 1,
+        numNight: reservationData.numNight,
         status: 'unconfirmed'
     };
 
