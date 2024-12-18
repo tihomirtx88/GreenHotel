@@ -6,7 +6,7 @@ import { createReservation } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
 export default function ReservationForm({ apartment, user }) {
-  const { maxCapacity, regularPrice, discount, id } = apartment;
+  const { maxCapacity, regularPrice, discount, id, hasBreakfast, isPaid } = apartment;
   const { range, resetRange } = useReservation();
 
   const startDate = range.from;
@@ -23,6 +23,7 @@ export default function ReservationForm({ apartment, user }) {
     numNight,
     status: "unconfirmed", 
     hasBreakfast,
+    isPaid
   };
 
   const createBookingWithData = createReservation.bind(null, reservationData);
