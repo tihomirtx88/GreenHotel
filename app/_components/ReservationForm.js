@@ -88,7 +88,6 @@ export default function ReservationForm({ apartment, user }) {
             type="checkbox"
             id="hasBreakfast"
             checked={hasBreakfast}
-            onChange={(e) => setHasBreakfast(e.target.checked)}
             className="w-5 h-5"
           />
           <label htmlFor="hasBreakfast">Include Breakfast?</label>
@@ -100,7 +99,6 @@ export default function ReservationForm({ apartment, user }) {
             type="checkbox"
             id="isPaid"
             checked={isPaid}
-            onChange={(e) => setIsPaid(e.target.checked)}
             className="w-5 h-5"
           />
           <label htmlFor="isPaid">Mark as Paid?</label>
