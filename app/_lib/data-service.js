@@ -224,3 +224,20 @@ export async function deleteBooking(id) {
   }
   return data;
 }
+
+export async function fetchAllUsers(){
+  try {
+    const { data, error } = await supabase
+      .from("quests") 
+      .select("*"); 
+
+    if (error) {
+      throw new Error(`Error fetching users: ${error.message}`);
+    }
+
+    console.log("All Users:", data);
+    return data; 
+  } catch (err) {
+    console.error(err);
+  }
+};
