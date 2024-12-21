@@ -17,12 +17,12 @@ const navLinks = [
   },
   {
     name: "Create rooms",
-    href: "/account/reservations",
+    href: "/apartments/create",
     icon: <BuildingOfficeIcon className="h-5 w-5 text-primary-600" />,
   },
   {
     name: "Create user",
-    href: "/account/profile",
+    href: "/users/create",
     icon: <RectangleStackIcon className="h-5 w-5 text-primary-600" />,
   },
 ];
