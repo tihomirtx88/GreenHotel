@@ -25,6 +25,11 @@ const navLinks = [
     href: "/users/create",
     icon: <RectangleStackIcon className="h-5 w-5 text-primary-600" />,
   },
+  {
+    name: "All users",
+    href: "/users",
+    icon: <RectangleStackIcon className="h-5 w-5 text-primary-600" />,
+  },
 ];
 
 function AdminSideNavigation() {
