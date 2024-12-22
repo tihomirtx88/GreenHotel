@@ -1,6 +1,6 @@
 "use client";
 
-import { createGuest } from "../_lib/data-service";
+import { createUser } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
 export default function UserForm() {
@@ -12,7 +12,7 @@ export default function UserForm() {
       {/* <form action={createBookingWithData}  */}
       <form
         action={async (formData) => {
-          await createGuest(formData);
+          await createUser(formData);
         }}
         className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
       >
@@ -89,11 +89,11 @@ export default function UserForm() {
             <option value="" key="">
               Select Admin Status...
             </option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true">Admin</option>
+            <option value="false">User</option>
           </select>
         </div>
-
+        
         <div className="flex justify-end items-center gap-6">
           <SubmitButton pendingLabel="Creating user...">Create User Now</SubmitButton>
         </div>
