@@ -225,8 +225,10 @@ export async function deleteBooking(id) {
   return data;
 }
 
-export async function fetchAllUsers() {
-  const { data, error } = await supabase.from("guests").select("*");
+export async function fetchAllUsers(page = 1, limit = 10) {
+  const start = (page - 1) * limit;
+  const end = start + limit - 1;
+  const { data, error } = await supabase.from("guests").select("*").range(start, end);
 
   if (error) {
     console.error(error);
