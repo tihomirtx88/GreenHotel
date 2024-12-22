@@ -12,7 +12,6 @@ export const metadata = {
 
 export default async function Page({searchParams}) {
 
-
   const filter = searchParams?.capacity ?? "all";
 
   return (
