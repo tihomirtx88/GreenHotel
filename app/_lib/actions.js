@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
-import { createBooking, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
+import { createBooking, createGuest, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
 
 export async function updateProfile(formData) {
     // Authentication
@@ -68,6 +68,24 @@ export async function createReservation(reservationData, formData){
 
     await createBooking(newBooking);
     revalidatePath(`/apartments/${reservationData.bookingId}`);
+    redirect('/thankyou');
+};
+
+export async function createUser(formData){
+    const session = await auth();
+    if(!session) throw new Error("You must to logged in!");
+
+    const newUser = {
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        nationalID: formData.get('nationalID'),
+        nationality: formData.get('nationality'),
+        countryFlag: formData.get('countryFlag'), 
+        admin: formData.get('admin')
+    };
+
+    await createGuest(newUser);
+    revalidatePath('users');
     redirect('/thankyou');
 };
 
