@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useOptimistic } from "react";
 import UserCard from "./UserCard";
 import { fetchAllUsers } from "../_lib/data-service";
 
