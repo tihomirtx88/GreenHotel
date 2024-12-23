@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
-import { createBooking, createCabin, createGuest, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
+import { createBooking, createCabin, createGuest, deleteBooking, deleteGuest, getBookings, updateBooking, updateGuest } from "./data-service";
 
 export async function updateProfile(formData) {
     // Authentication
@@ -131,4 +131,12 @@ export async function deleteReservation(bookingId) {
 
     await deleteBooking(bookingId);
     revalidatePath("/account/reservations");
+}
+
+export async function deleteUser(userId){
+    const session = await auth();
+    if(!session) throw new Error("You must to logged in!");
+
+    await deleteGuest(userId);
+    revalidatePath("/users");
 }
