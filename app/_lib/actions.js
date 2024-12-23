@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
-import { createBooking, createGuest, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
+import { createBooking, createCabin, createGuest, deleteBooking, getBookings, updateBooking, updateGuest } from "./data-service";
 
 export async function updateProfile(formData) {
     // Authentication
@@ -48,6 +48,24 @@ export async function updateReservation(formData){
 
     redirect('/account/reservations');
 };
+
+export async function crreateApartment(formData) {
+    const session = await auth();
+    if(!session) throw new Error("You must to logged in!");
+
+    const newApartment = {
+        name: formData.get('name'),
+        maxCapacity: Number(formData.get('maxCapacity')),
+        regularPrice: Number(formData.get('regularPrice')),
+        discount: Number(formData.get('discount')),
+        discription: formData.get('discription'), 
+        image: formData.get('image')
+    };
+
+    await createCabin(newApartment);
+    revalidatePath(`/apartments`);
+    redirect('/thankyou');
+}
 
 export async function createReservation(reservationData, formData){
     const session = await auth();
