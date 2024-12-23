@@ -138,5 +138,7 @@ export async function deleteUser(userId){
     if(!session) throw new Error("You must to logged in!");
 
     await deleteGuest(userId);
+    console.log('successssssssss');
+    
     revalidatePath("/users");
 }

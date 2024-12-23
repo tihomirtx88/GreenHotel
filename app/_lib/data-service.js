@@ -1,5 +1,5 @@
 import { eachDayOfInterval } from "date-fns";
-import  { supabaseUrl, supabase } from "./supabase";
+import { supabaseUrl, supabase } from "./supabase";
 import { notFound } from "next/navigation";
 
 /////////////
@@ -271,16 +271,16 @@ export async function deleteBooking(id) {
   return data;
 }
 
-export async function deleteGuest(id){
-  const {data, error} = await supabase.from("guests").delete().eq("id", id);
+export async function deleteGuest(id) {
+  const { data, error } = await supabase.from("guests").delete().eq("id", id);
+  console.log("data services deltingin");
 
   if (error) {
     console.error(error);
     throw new Error("User could not be deleted");
   }
   return data;
-};
-
+}
 
 export async function fetchAllUsers(page = 1, limit = 8) {
   const start = (page - 1) * limit;
@@ -294,5 +294,17 @@ export async function fetchAllUsers(page = 1, limit = 8) {
     console.error(error);
     throw new Error("Fetching all users are not possible");
   }
-  return data;
+
+  // Create a map to track unique IDs
+  const uniqueUsers = [];
+  const seenIds = new Set();
+
+  for (const user of data) {
+    if (!seenIds.has(user.id)) {
+      uniqueUsers.push(user);
+      seenIds.add(user.id);
+    }
+  }
+
+  return uniqueUsers;
 }
