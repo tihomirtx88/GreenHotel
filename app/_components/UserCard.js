@@ -1,9 +1,12 @@
-import { UserIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
+import DeleteUser from "./DeleteUser";
 // import Link from "next/link";
 
 export default function UserCard({ user }) {
   const fallbackFlag = "/images/default-flag.png";
+
 
   return (
     <div className="flex border-primary-800 border">
@@ -46,14 +49,20 @@ export default function UserCard({ user }) {
           </div>
         </div>
 
-        {/* <div className="bg-primary-950 border-t border-t-primary-800 text-right">
-          <Link
-            href={`/apartments/${user?.id}`}
-            className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
-          >
-            Details & reservation &rarr;
-          </Link>
-        </div> */}
+        <div className="flex flex-col border-l border-primary-800 w-[100px]">
+      
+          <>
+            <Link
+              href={`/account/reservations/edit/${id}`}
+              className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
+            >
+              <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
+              <span className="mt-1">Edit</span>
+            </Link>
+            <DeleteUser userId={user.id} onDelete={onDelete}/>
+          </>
+    
+      </div>
       </div>
     </div>
   );
