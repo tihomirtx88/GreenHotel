@@ -1,5 +1,5 @@
 import { eachDayOfInterval } from "date-fns";
-import { supabase } from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 import { notFound } from "next/navigation";
 
 /////////////
@@ -180,6 +180,52 @@ export async function createBooking(newBooking) {
   return data;
 }
 
+export async function createCabin(newCabin) {
+  const hasImagePath = newCabin.image?.startWith?.(supabaseUrl);
+  //CReating image name adn replace with one server will create
+  const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
+    "/",
+    ""
+  );
+
+  const imagePath = hasImagePath
+    ? newCabin.image
+    : `${supabaseUrl}/storage/v1/object/public/cabins-images/${imageName}`;
+
+  //Create cabin
+  let query = supabase.from("cabins");
+
+  //A Create
+  query = query.insert([{ ...newCabin, image: imagePath }]);
+
+  // With select and single will return the object from database
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be created");
+  }
+
+  //2 Upload image
+  // In case dublicate image, if there is already image to no repeat
+  if (hasImagePath) return data;
+
+  const { error: storageError } = await supabase.storage
+    .from("cabins-images")
+    .upload(imageName, newCabin.image);
+
+  //3. Delete the cabin IF there was an error uplaoding image
+  if (storageError) {
+    await supabase.from("cabins").delete().eq("id", data.id);
+    console.error(storageError);
+    throw new Error(
+      "Cabin image could not be uploaded and the cabin was not created"
+    );
+  }
+
+  return data;
+}
+
 /////////////
 // UPDATE
 
@@ -228,7 +274,10 @@ export async function deleteBooking(id) {
 export async function fetchAllUsers(page = 1, limit = 8) {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
-  const { data, error } = await supabase.from("guests").select("*").range(start, end);
+  const { data, error } = await supabase
+    .from("guests")
+    .select("*")
+    .range(start, end);
 
   if (error) {
     console.error(error);
