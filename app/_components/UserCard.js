@@ -4,13 +4,15 @@ import Link from "next/link";
 import DeleteUser from "./DeleteUser";
 // import Link from "next/link";
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, onDelete }) {
   const fallbackFlag = "/images/default-flag.png";
+  console.log(user);
+  
 
 
   return (
     <div className="flex border-primary-800 border">
-      <div className="flex-grow">
+      <div className="flex flex-row flex-grow">
         <div className="pt-5 pb-4 px-7 bg-primary-950">
           <h3 className="text-accent-500 font-semibold text-2xl mb-3">
             Guest: {user?.fullName}
@@ -49,17 +51,17 @@ export default function UserCard({ user }) {
           </div>
         </div>
 
-        <div className="flex flex-col border-l border-primary-800 w-[100px]">
+        <div className="flex flex-col border-l border-primary-800 w-full">
       
           <>
             <Link
-              href={`/account/reservations/edit/${id}`}
+              href={`/users/edit/${user?.id}`}
               className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
             >
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
-            <DeleteUser userId={user.id} onDelete={onDelete}/>
+            <DeleteUser userId={user?.id} onDelete={onDelete}/>
           </>
     
       </div>
