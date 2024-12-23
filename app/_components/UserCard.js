@@ -9,8 +9,8 @@ export default function UserCard({ user, onDelete }) {
 
   return (
     <div className="flex border-primary-800 border">
-      <div className="flex flex-row flex-grow">
-        <div className="pt-5 pb-4 px-7 bg-primary-950">
+      <div className="flex w-full">
+        <div className="pt-5 pb-4 px-7 bg-primary-950 w-3/4">
           <h3 className="text-accent-500 font-semibold text-2xl mb-3">
             Guest: {user?.fullName}
           </h3>
@@ -48,7 +48,7 @@ export default function UserCard({ user, onDelete }) {
           </div>
         </div>
 
-        <div className="flex flex-col border-l border-primary-800 w-full">
+        <div className="flex flex-col border-l border-primary-800 w-1/4">
       
           <>
             <Link

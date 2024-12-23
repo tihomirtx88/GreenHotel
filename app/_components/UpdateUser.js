@@ -1,26 +1,26 @@
 "use client";
 
-import { createUser } from "../_lib/actions";
+import { updateUser } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
-export default function UserForm() {
-
-  return (
-    <div className="scale-[1.01]">
-     
-
-      {/* <form action={createBookingWithData}  */}
-      <form
-        action={async (formData) => {
-          await createUser(formData);
-        }}
-        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
+export default function  UpdateUser({currentUser, userId}) {
+    const { fullName, email, id, nationalID, nationality, countryFlag, admin } = currentUser;
+    console.log(userId);
+    
+    return(
+        <form
+         action={async (formData) => {
+                 await updateUser(userId, formData);
+               }}
+        className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
       >
+        {/* to pass boookingId to action easy way */}
+        <input type="hidden" value={userId} name="userId" />
 
         <div className="space-y-2">
           <label htmlFor="fullName">Full Name</label>
           <input
-            type="text"
+            defaultValue={fullName}
             name="fullName"
             id="fullName"
             required
@@ -28,12 +28,12 @@ export default function UserForm() {
             placeholder="Enter full name"
           />
         </div>
-  
+
         <div className="space-y-2">
           <label htmlFor="email">Email</label>
           <input
-            type="email"
             name="email"
+            defaultValue={email}
             id="email"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
@@ -44,9 +44,9 @@ export default function UserForm() {
         <div className="space-y-2">
           <label htmlFor="nationalID">National ID</label>
           <input
-            type="text"
             name="nationalID"
             id="nationalID"
+            defaultValue={nationalID}
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
             placeholder="Enter National ID"
@@ -56,9 +56,9 @@ export default function UserForm() {
         <div className="space-y-2">
           <label htmlFor="nationality">Nationality</label>
           <input
-            type="text"
             name="nationality"
             id="nationality"
+            defaultValue={nationality}
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
             placeholder="Enter nationality"
@@ -68,9 +68,9 @@ export default function UserForm() {
         <div className="space-y-2">
           <label htmlFor="countryFlag">Country Flag URL</label>
           <input
-            type="url"
             name="countryFlag"
             id="countryFlag"
+            defaultValue={countryFlag}
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
             placeholder="Enter URL for country flag"
@@ -83,6 +83,7 @@ export default function UserForm() {
             name="admin"
             id="admin"
             required
+            defaultValue={admin}
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
           >
             <option value="" key="">
@@ -92,11 +93,12 @@ export default function UserForm() {
             <option value="false">User</option>
           </select>
         </div>
-        
+
         <div className="flex justify-end items-center gap-6">
-          <SubmitButton pendingLabel="Creating user...">Create User Now</SubmitButton>
+          <SubmitButton pendingLabel="Updating...">
+            Update User
+          </SubmitButton>
         </div>
       </form>
-    </div>
-  );
+    );
 }

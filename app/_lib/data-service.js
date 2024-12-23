@@ -65,6 +65,18 @@ export async function getGuest(email) {
   return data;
 }
 
+//getGuestBy id
+export async function getGuestById(id) {
+  const { data, error } = await supabase
+    .from("guests")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  // No error here! We handle the possibility of no guest in the sign in callback
+  return data;
+}
+
 export async function getBooking(id) {
   const { data, error, count } = await supabase
     .from("bookings")

@@ -43,10 +43,6 @@ export default function UsersList() {
     }
   };
 
-  console.log(users);
-  
-  
-
   const [optimisticBookigns, optimisticDelete] = useOptimistic(
     // Current state
     users,
