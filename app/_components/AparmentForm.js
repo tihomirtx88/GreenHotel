@@ -1,10 +1,13 @@
+"use client";
+
+import { crreateApartment } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
 export default function AparmentForm() {
   return (
     <form
       action={async (formData) => {
-        await createApartment(formData);
+        await crreateApartment(formData);
       }}
       className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
     >
@@ -69,9 +72,9 @@ export default function AparmentForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="image">Image</label>
+        <label htmlFor="discription">Image</label>
         <input
-          type="url"
+          type="file"
           name="image"
           id="image"
           required
