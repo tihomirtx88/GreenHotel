@@ -3,6 +3,8 @@
 import { useState, useEffect, useOptimistic } from "react";
 import UserCard from "./UserCard";
 import { fetchAllUsers } from "../_lib/data-service";
+import { deleteUser } from "../_lib/actions";
+
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
@@ -15,7 +17,15 @@ export default function UsersList() {
       setIsLoading(true);
       try {
         const data = await fetchAllUsers(page, 10);
-        setUsers((prev) => [...prev, ...data]);
+        setUsers((prev) => {
+          const userMap = new Map();
+          // Add existing users to the map
+          prev.forEach((user) => userMap.set(user.id, user));
+          // Add new users to the map
+          data.forEach((user) => userMap.set(user.id, user));
+          // Convert map back to an array
+          return Array.from(userMap.values());
+        });
         setHasMore(data.length === 10);
       } catch (err) {
         console.error(err);
@@ -33,6 +43,10 @@ export default function UsersList() {
     }
   };
 
+  console.log(users);
+  
+  
+
   const [optimisticBookigns, optimisticDelete] = useOptimistic(
     // Current state
     users,
@@ -44,7 +58,7 @@ export default function UsersList() {
 
   async function handleDelete(userId) {
     optimisticDelete(userId);
-    await deleteReservation(userId);
+    await deleteUser(userId);
   }
 
   return (

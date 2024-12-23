@@ -6,9 +6,6 @@ import DeleteUser from "./DeleteUser";
 
 export default function UserCard({ user, onDelete }) {
   const fallbackFlag = "/images/default-flag.png";
-  console.log(user);
-  
-
 
   return (
     <div className="flex border-primary-800 border">
