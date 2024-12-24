@@ -11,7 +11,7 @@ export default function DeleteCabin({ apartmentId, onDelete }) {
     if (confirm("Are you sure you want to delete this apartment"))
       startTransition(() =>
         // apartmentId(bookingId));
-        onDelete(userId)
+        onDelete(apartmentId)
       );
   }
   

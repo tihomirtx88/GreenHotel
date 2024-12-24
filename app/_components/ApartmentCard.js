@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteCabin from "./DeleteCabin";
 
-function ApartmentCard({ apartment }) {
+function ApartmentCard({ apartment, onDelete }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = apartment;
 
   return (
@@ -50,13 +50,13 @@ function ApartmentCard({ apartment }) {
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
           <>
             <Link
-              href={`/users/edit/${user?.id}`}
+              href={`/apartments/edit/${id}`}
               className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
             >
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
-            <DeleteCabin userId={user?.id} onDelete={onDelete} />
+            <DeleteCabin apartmentId={id} onDelete={onDelete} />
           </>
           <Link
             href={`/apartments/${id}`}
