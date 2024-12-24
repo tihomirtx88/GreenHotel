@@ -1,7 +1,5 @@
-import ApartmentsList from "../_components/ApartmentsList";
+
 import { Suspense } from "react";
-import Spinner from "../_components/Spinner";
-import Filter from "../_components/Filter";
 import UpdateApartment from "@/app/_components/UpdateApartment";
 
 //Refresh data affter 36 sec
@@ -19,7 +17,7 @@ export default async function Page() {
         Edit Luxury apartment
       </h1>
 
-      <Suspense fallback={<Spinner/>} >
+      <Suspense >
         <UpdateApartment/>
       </Suspense>
     </div>
