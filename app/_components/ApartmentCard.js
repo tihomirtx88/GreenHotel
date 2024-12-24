@@ -1,6 +1,7 @@
 import { PencilSquareIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteCabin from "./DeleteCabin";
 
 function ApartmentCard({ apartment }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = apartment;
@@ -55,7 +56,7 @@ function ApartmentCard({ apartment }) {
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
-            <DeleteUser userId={user?.id} onDelete={onDelete} />
+            <DeleteCabin userId={user?.id} onDelete={onDelete} />
           </>
           <Link
             href={`/apartments/${id}`}
