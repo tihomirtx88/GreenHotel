@@ -1,4 +1,4 @@
-import { UsersIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,6 +47,16 @@ function ApartmentCard({ apartment }) {
         </div>
 
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
+          <>
+            <Link
+              href={`/users/edit/${user?.id}`}
+              className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
+            >
+              <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
+              <span className="mt-1">Edit</span>
+            </Link>
+            <DeleteUser userId={user?.id} onDelete={onDelete} />
+          </>
           <Link
             href={`/apartments/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
