@@ -8,6 +8,7 @@ import {
   createCabin,
   createGuest,
   deleteBooking,
+  deleteCabin,
   deleteGuest,
   getBookings,
   updateBooking,
@@ -169,7 +170,16 @@ export async function deleteUser(userId) {
   if (!session) throw new Error("You must to logged in!");
 
   await deleteGuest(userId);
-  console.log("successssssssss");
 
   revalidatePath("/users");
 }
+
+export async function deleteApartment(apartmentId){
+  const session = await auth();
+  if (!session) throw new Error("You must to logged in!");
+
+  await deleteCabin(apartmentId);
+  revalidatePath("/apartments");
+  revalidatePath(`/apartments/${apartmentId}`);
+  redirect("/apartments");
+};
