@@ -283,9 +283,20 @@ export async function deleteBooking(id) {
   return data;
 }
 
+export async function deleteCabin(id){
+  const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("User could not be deleted");
+  }
+  return data;
+
+};
+
 export async function deleteGuest(id) {
   const { data, error } = await supabase.from("guests").delete().eq("id", id);
-  console.log("data services deltingin");
+
 
   if (error) {
     console.error(error);
