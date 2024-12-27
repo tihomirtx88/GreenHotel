@@ -1,5 +1,7 @@
 "use server";
 
+import { supabaseUrl, supabase } from "./supabase";
+
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
@@ -59,13 +61,37 @@ export async function updateApartment(apartmentId, formData){
   const session = await auth();
   if (!session) throw new Error("You must to logged in!");
 
+  const imageFile = formData.get("image");
+
+  let imageUrl = null;
+
+  // Upload the file if it exists
+  if (imageFile && imageFile.size > 0) {
+    const { data, error } = await supabase.storage
+      .from("cabins-images")
+      .upload(`cabins/${apartmentId}/${imageFile.name}`, imageFile, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("File upload error:", error);
+      throw new Error("Image upload failed.");
+    }
+
+    // Get the public URL of the uploaded file
+    imageUrl = supabase.storage
+      .from("cabins-images")
+      .getPublicUrl(`cabins/${apartmentId}/${imageFile.name}`).data.publicUrl;
+  }
+
   const updatedCabin = {
-    fullName: formData.get("fullName"),
-    email: formData.get("email"),
-    nationalID: formData.get("nationalID"),
-    nationality: formData.get("nationality"),
-    countryFlag: formData.get("countryFlag"),
-    admin: formData.get("admin"),
+    name: formData.get("name"),
+    maxCapacity: Number(formData.get("maxCapacity")),
+    regularPrice: Number(formData.get("regularPrice")),
+    discount: Number(formData.get("discount")),
+    discription: formData.get("discription"),
+    image: imageUrl,
   };
 
   await updateCabin(apartmentId, updatedCabin);
