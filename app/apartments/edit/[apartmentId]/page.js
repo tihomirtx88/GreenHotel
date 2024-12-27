@@ -1,16 +1,17 @@
 
 import { Suspense } from "react";
 import UpdateApartment from "@/app/_components/UpdateApartment";
+import { getCabin } from "@/app/_lib/data-service";
 
-//Refresh data affter 36 sec
-export const revalidate = 3600;
+
 
 export const metadata = {
   title: "Edit Apartment",
 };
 
-export default async function Page() {
-
+export default async function Page({params}) {
+   const { apartmentId } = params;
+   const currentApartment = await getCabin(apartmentId);
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -18,7 +19,7 @@ export default async function Page() {
       </h1>
 
       <Suspense >
-        <UpdateApartment/>
+        <UpdateApartment currentApartment={currentApartment} apartmentId={apartmentId}/>
       </Suspense>
     </div>
   );

@@ -1,102 +1,97 @@
 "use client";
 
-import { updateUser } from "../_lib/actions";
+import { updateApartment } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
 export default function  UpdateApartment({currentApartment, apartmentId}) {
-    const { fullName, email, id, nationalID, nationality, countryFlag, admin } = currentApartment;
-    console.log(currentApartment);
+    const { maxCapacity, name, regularPrice, discount, discription, image } = currentApartment;
     
     return(
-        <form
-         action={async (formData) => {
-                 await updateUser(userId, formData);
-               }}
-        className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+     <form
+        action={async (formData) => {
+          await updateApartment(apartmentId, formData);
+        }}
+        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
       >
-        {/* to pass boookingId to action easy way */}
-        <input type="hidden" value={userId} name="userId" />
-
         <div className="space-y-2">
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="name">Name</label>
           <input
-            defaultValue={fullName}
-            name="fullName"
-            id="fullName"
+            type="text"
+            name="name"
+            defaultValue={name}
+            id="name"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter full name"
+            placeholder="Enter name"
           />
         </div>
-
+  
         <div className="space-y-2">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="maxCapacity">Max capacity</label>
           <input
-            name="email"
-            defaultValue={email}
-            id="email"
+            type="number"
+            defaultValue={maxCapacity}
+            name="maxCapacity"
+            id="maxCapacity"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter email"
+            placeholder="Enter capacity"
           />
         </div>
-
+  
         <div className="space-y-2">
-          <label htmlFor="nationalID">National ID</label>
+          <label htmlFor="regularPrice">Regular price</label>
           <input
-            name="nationalID"
-            id="nationalID"
-            defaultValue={nationalID}
+            type="number"
+            defaultValue={regularPrice}
+            name="regularPrice"
+            id="regularPrice"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter National ID"
+            placeholder="Enter price"
           />
         </div>
-
+  
         <div className="space-y-2">
-          <label htmlFor="nationality">Nationality</label>
+          <label htmlFor="discount">Discount</label>
           <input
-            name="nationality"
-            id="nationality"
-            defaultValue={nationality}
+            type="number"
+            defaultValue={discount}
+            name="discount"
+            id="discount"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter nationality"
+            placeholder="Enter discount"
           />
         </div>
-
+  
         <div className="space-y-2">
-          <label htmlFor="countryFlag">Country Flag URL</label>
+          <label htmlFor="discription">Description</label>
           <input
-            name="countryFlag"
-            id="countryFlag"
-            defaultValue={countryFlag}
+            type="text"
+            defaultValue={discription}
+            name="discription"
+            id="discription"
             required
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter URL for country flag"
+            placeholder="Enter description"
           />
         </div>
-
+  
         <div className="space-y-2">
-          <label htmlFor="admin">Admin Status</label>
-          <select
-            name="admin"
-            id="admin"
-            required
-            defaultValue={admin}
+          <label htmlFor="image">Image</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          >
-            <option value="" key="">
-              Select Admin Status...
-            </option>
-            <option value="true">Admin</option>
-            <option value="false">User</option>
-          </select>
+            placeholder="Upload image here"
+          />
         </div>
-
+  
         <div className="flex justify-end items-center gap-6">
-          <SubmitButton pendingLabel="Updating...">
-            Update User
+          <SubmitButton pendingLabel="Updating apartment...">
+            Update Current Apartment Now
           </SubmitButton>
         </div>
       </form>
