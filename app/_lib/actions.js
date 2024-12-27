@@ -12,6 +12,7 @@ import {
   deleteGuest,
   getBookings,
   updateBooking,
+  updateCabin,
   updateGuest,
 } from "./data-service";
 
@@ -52,6 +53,26 @@ export async function updateUser(userId, formData) {
   revalidatePath("/users");
   revalidatePath(`/users/edit/${userId}`);
   redirect(`/users/edit/${userId}`);
+}
+
+export async function updateApartment(apartmentId, formData){
+  const session = await auth();
+  if (!session) throw new Error("You must to logged in!");
+
+  const updatedCabin = {
+    fullName: formData.get("fullName"),
+    email: formData.get("email"),
+    nationalID: formData.get("nationalID"),
+    nationality: formData.get("nationality"),
+    countryFlag: formData.get("countryFlag"),
+    admin: formData.get("admin"),
+  };
+
+  await updateCabin(apartmentId, updatedCabin);
+  revalidatePath("/apartments");
+  revalidatePath(`/apartments/edit/${apartmentId}`);
+  redirect(`/apartments/edit/${apartmentId}`);
+
 }
 
 export async function updateReservation(formData) {
