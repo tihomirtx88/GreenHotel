@@ -225,8 +225,23 @@ export async function deleteApartment(apartmentId){
   const session = await auth();
   if (!session) throw new Error("You must to logged in!");
 
-  await deleteCabin(apartmentId);
-  revalidatePath("/apartments");
-  revalidatePath(`/apartments/${apartmentId}`);
-  redirect("/apartments");
+  try {
+  
+    const deletedApartment = await deleteCabin(apartmentId);
+
+    if (!deletedApartment || deletedApartment.length === 0) {
+  
+      throw new Error("Apartment not found for deletion or already deleted.");
+    }
+
+  
+    revalidatePath("/apartments");
+    revalidatePath(`/apartments/${apartmentId}`);
+
+
+    return true; 
+
+  } catch (error) {
+    console.error("Error deleting apartment:", error.message);
+  }
 };
