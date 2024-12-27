@@ -5,6 +5,8 @@ import ReservationCard from "./ReservationCard";
 import { deleteReservation } from "../_lib/actions";
 
 export default function ReservationList({ bookings }) {
+  
+  
   const [ optimisticBookigns, optimisticDelete] = useOptimistic(
     // Current state
     bookings, 
@@ -16,6 +18,7 @@ export default function ReservationList({ bookings }) {
   async function handleDelete(bookingId){
     optimisticDelete(bookingId);
     await deleteReservation(bookingId);
+    
   };
 
   return (

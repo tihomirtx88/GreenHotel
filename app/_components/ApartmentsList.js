@@ -1,24 +1,16 @@
 "use client";
 
 import { unstable_noStore } from "next/cache";
-import { useEffect, useState, useCallback, startTransition } from "react";
+
+
+import { useEffect, useState, useCallback } from "react";
 import { getCabins } from "../_lib/data-service";
 import ApartmentCard from "./ApartmentCard";
-import { useOptimistic } from "react";
 import { deleteApartment } from "../_lib/actions";
 
 export default function ApartmentsList({ filter }) {
-  // Refresh data cache
-  // unstable_noStore();
-
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [optimisticApartments, updateApartments] = useOptimistic(
-    [],
-    (currentApartments, apartmentId) =>
-      currentApartments.filter((apartment) => apartment.id !== apartmentId)
-  );
 
   // Fetch apartments on mount
   useEffect(() => {
@@ -26,9 +18,6 @@ export default function ApartmentsList({ filter }) {
       try {
         const fetchedApartments = await getCabins();
         setApartments(fetchedApartments);
-        startTransition(() => {
-          updateApartments(() => fetchedApartments);
-        });
       } catch (error) {
         console.error("Error fetching apartments:", error);
       } finally {
@@ -53,27 +42,23 @@ export default function ApartmentsList({ filter }) {
       (apartment) => apartment.maxCapacity >= 8
     );
 
-
-    const handleDelete = useCallback(
-      async (apartmentId) => {
-        startTransition(() => {
-          updateApartments((current) =>
-            current.filter((a) => a.id !== apartmentId)
-          );
-        });
+  const handleDelete = useCallback(
+    async (apartmentId) => {
+      // Remove the apartment from the UI immediately
+      setApartments((prev) => prev.filter((apartment) => apartment.id !== apartmentId));
   
-        try {
-          await deleteApartment(apartmentId);
-        } catch (error) {
-          console.error("Failed to delete apartment:", error);
-          setApartments((prev) => [
-            ...prev,
-            apartments.find((a) => a.id === apartmentId),
-          ]);
-        }
-      },
-      [apartments, updateApartments]
-    );
+      try {
+        // Attempt to delete the apartment from the server
+        await deleteApartment(apartmentId);
+      } catch (error) {
+        console.error("Failed to delete apartment:", error);
+        // In case of failure, you could add some UI feedback here
+        // For now, we just log the error, but you can decide to add the apartment back to the list if necessary
+        // setApartments((prev) => [...prev, deletedApartment]);
+      }
+    },
+    [] // No dependencies needed since we're directly using the state updater
+  );
 
   if (loading) return <p>Loading...</p>;
   if (!apartments.length) return <p>No apartments available</p>;

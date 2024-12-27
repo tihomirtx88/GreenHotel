@@ -298,20 +298,25 @@ export async function deleteBooking(id) {
   return data;
 }
 
-export async function deleteCabin(id){
-  const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+export async function deleteCabin(id) {
+  try {
+    const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+    if (error) {
+      throw new Error("Failed to delete cabin from database.");
+    }
 
-  if (error) {
-    console.error(error);
-    throw new Error("User could not be deleted");
+    if (data.length === 0) {
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Cabin could not be deleted");
   }
-  return data;
-
-};
+}
 
 export async function deleteGuest(id) {
   const { data, error } = await supabase.from("guests").delete().eq("id", id);
-
 
   if (error) {
     console.error(error);
