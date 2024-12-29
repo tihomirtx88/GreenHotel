@@ -12,9 +12,6 @@ export async function getCabin(id) {
     .eq("id", id)
     .single();
 
-  // For testing
-  // await new Promise((res) => setTimeout(res, 1000));
-
   if (error) {
     console.error(error);
     notFound();
@@ -40,7 +37,7 @@ export async function getCabinPrice(id) {
 export const getCabins = async function () {
   const { data, error } = await supabase
     .from("cabins")
-    .select("id, name, maxCapacity, regularPrice, discount, image")
+    .select("id, name, maxCapacity, regularPrice, discount, image, latitude, longitude")
     .order("name");
 
   // await new Promise((res) => setTimeout(res, 1000));

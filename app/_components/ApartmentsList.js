@@ -2,7 +2,6 @@
 
 import { unstable_noStore } from "next/cache";
 
-
 import { useEffect, useState, useCallback } from "react";
 import { getCabins } from "../_lib/data-service";
 import ApartmentCard from "./ApartmentCard";
@@ -44,7 +43,7 @@ export default function ApartmentsList({ filter }) {
 
   const handleDelete = useCallback(
     async (apartmentId) => {
-      // Remove the apartment from the UI immediately
+
       setApartments((prev) => prev.filter((apartment) => apartment.id !== apartmentId));
   
       try {
@@ -52,12 +51,9 @@ export default function ApartmentsList({ filter }) {
         await deleteApartment(apartmentId);
       } catch (error) {
         console.error("Failed to delete apartment:", error);
-        // In case of failure, you could add some UI feedback here
-        // For now, we just log the error, but you can decide to add the apartment back to the list if necessary
-        // setApartments((prev) => [...prev, deletedApartment]);
       }
     },
-    [] // No dependencies needed since we're directly using the state updater
+    [] 
   );
 
   if (loading) return <p>Loading...</p>;
