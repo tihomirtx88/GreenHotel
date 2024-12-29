@@ -8,50 +8,54 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef } from "react";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+let defaultCoordinates = [27.910543, 43.204666];
 
 export default function Apartment({ apartment }) {
   const mapContainerRef = useRef(null);
   const { name, maxCapacity, image, latitude, longitude, description } =
     apartment;
-
+  
   useEffect(() => {
     if (!mapContainerRef.current || latitude == null || longitude == null)
       return;
 
-    const bounds = new mapboxgl.LngLatBounds();
-
-    // Initialize Mapbox map
+    // Initialize map
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [longitude, latitude],
-      zoom: 12,
+      style: "mapbox://styles/tihomirtx88/clzfox4p200dc01prb4f10xij",
+      scrollZoom: false,
     });
 
-    // Add a marker at the coordinates
-    const marker = new mapboxgl.Marker()
-      .setLngLat([longitude, latitude])
-      .setPopup(new mapboxgl.Popup().setHTML(`<p>${name}</p>`))
+    // Create a bounds object
+    const bounds = new mapboxgl.LngLatBounds();
+    const coordinates = (latitude != null && longitude != null)
+    ? [longitude, latitude]
+    : defaultCoordinates;
+    
+
+    const el = document.createElement('div');
+    el.className = 'marker';
+  
+    new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+      .setLngLat(coordinates)
       .addTo(map);
-
-    // After marker is added, fit the bounds
-    bounds.extend([longitude, latitude]);
-
+  
+    new mapboxgl.Popup({ offset: 30 })
+      .setLngLat(coordinates)
+      .setHTML(`<p>${name}</p>`)
+      .addTo(map);
+  
+    bounds.extend(coordinates);
+  
     map.fitBounds(bounds, {
-      padding: {
-        top: 50,
-        bottom: 50,
-        left: 50,
-        right: 50,
-      },
-      maxZoom: 13,
+      padding: { top: 50, bottom: 50, left: 50, right: 50 },
+      maxZoom: 15,
     });
 
-    map.on("load", () => {
-      // map.resize();
-    });
-
-    // Cleanup on unmount
+    console.log('Map center:', map.getCenter());
+console.log('Map bounds:', map.getBounds());
+console.log('Marker coordinates:', coordinates);
+  
     return () => map.remove();
   }, [latitude, longitude, name]);
 
@@ -102,12 +106,10 @@ export default function Apartment({ apartment }) {
         </div>
       </div>
 
-      <div
-      id="big-map-container"
-        ref={mapContainerRef}
-        style={{ height: "400px", width: "100%" }}
-        className="border border-primary-800"
-      ></div>
+      <section className="section-map">
+        <div id="map" ref={mapContainerRef} />
+      </section>
+
     </>
   );
 }
