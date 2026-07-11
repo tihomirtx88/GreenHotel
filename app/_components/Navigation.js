@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
-import Image from "next/image";
 
 export default async function Navigation() {
   const session = await auth();
@@ -32,7 +31,7 @@ export default async function Navigation() {
             className="flex items-center gap-2 sm:gap-3 transition-colors hover:text-accent-400"
           >
             {session?.user?.image && (
-              <Image
+              <image
                 src={session.user.image}
                 alt={session.user.name}
                 width={36}
@@ -54,7 +53,7 @@ export default async function Navigation() {
             className="flex items-center gap-2 sm:gap-3 transition-colors hover:text-accent-400"
           >
             {session?.user?.image && (
-              <Image
+              <image
                 src={session.user.image}
                 alt={session.user.name}
                 width={36}
