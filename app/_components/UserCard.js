@@ -1,4 +1,4 @@
-import { PencilSquareIcon, UserIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, ShieldCheckIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteUser from "./DeleteUser";
