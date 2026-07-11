@@ -5,18 +5,12 @@ import UserCard from "./UserCard";
 import { fetchAllUsers } from "../_lib/data-service";
 import { deleteUser } from "../_lib/actions";
 
-
-export default function UsersList({search}) {
- const [users, setUsers] = useState([]);
+export default function UsersList({ search }) {
+  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
-  useEffect(() => {
-    setUsers([]);
-    setPage(1);
-  }, [search]);
 
   useEffect(() => {
     async function loadUsers() {
@@ -25,14 +19,18 @@ export default function UsersList({search}) {
       try {
         const data = await fetchAllUsers(page, 10, search);
 
-        setUsers((prev) => {
-          const map = new Map();
+        if (page === 1) {
+          setUsers(data);
+        } else {
+          setUsers((prev) => {
+            const map = new Map();
 
-          prev.forEach((user) => map.set(user.id, user));
-          data.forEach((user) => map.set(user.id, user));
+            prev.forEach((user) => map.set(user.id, user));
+            data.forEach((user) => map.set(user.id, user));
 
-          return [...map.values()];
-        });
+            return [...map.values()];
+          });
+        }
 
         setHasMore(data.length === 10);
       } catch (err) {
@@ -53,29 +51,25 @@ export default function UsersList({search}) {
 
   const [optimisticUsers, optimisticDelete] = useOptimistic(
     users,
-    (currentUsers, userId) =>
-      currentUsers.filter((user) => user.id !== userId)
+    (currentUsers, userId) => currentUsers.filter((user) => user.id !== userId),
   );
 
- async function handleDelete(userId) {
-  optimisticDelete(userId);
-  await deleteUser(userId);
+  async function handleDelete(userId) {
+    optimisticDelete(userId);
+    await deleteUser(userId);
 
-  setUsers((prev) => prev.filter((user) => user.id !== userId));
-}
+    setUsers((prev) => prev.filter((user) => user.id !== userId));
+  }
 
   if (!isLoading && optimisticUsers.length === 0)
     return (
       <div className="py-16 text-center">
-        <p className="text-xl text-primary-400">
-          No users found.
-        </p>
+        <p className="text-xl text-primary-400">No users found.</p>
       </div>
     );
 
   return (
     <div className="space-y-10">
-
       {/* Cards */}
 
       <div
@@ -88,27 +82,18 @@ export default function UsersList({search}) {
         "
       >
         {optimisticUsers.map((user) => (
-          <UserCard
-            key={user.id}
-            user={user}
-            onDelete={handleDelete}
-          />
+          <UserCard key={user.id} user={user} onDelete={handleDelete} />
         ))}
       </div>
 
       {/* Footer */}
 
       <div className="flex justify-center">
-
         {isLoading ? (
           <div className="flex items-center gap-3 py-4">
-
             <div className="h-5 w-5 rounded-full border-2 border-accent-500 border-t-transparent animate-spin" />
 
-            <span className="text-primary-300">
-              Loading users...
-            </span>
-
+            <span className="text-primary-300">Loading users...</span>
           </div>
         ) : hasMore ? (
           <button

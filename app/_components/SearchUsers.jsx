@@ -13,15 +13,19 @@ export default function SearchUsers() {
   const searchParams = useSearchParams();
 
   function handleSearch(value) {
-    const params = new URLSearchParams(searchParams);
+  const params = new URLSearchParams(searchParams);
 
-    if (value) params.set("search", value);
-    else params.delete("search");
+  if (value)
+    params.set("search", value);
+  else
+    params.delete("search");
 
-    router.replace(`${pathname}?${params.toString()}`, {
-      scroll: false,
-    });
-  }
+  params.set("page", "1");
+
+  router.replace(`${pathname}?${params.toString()}`, {
+    scroll: false,
+  });
+}
 
   return (
     <div className="relative w-full max-w-md">
