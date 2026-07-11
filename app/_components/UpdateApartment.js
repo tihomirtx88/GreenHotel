@@ -3,97 +3,208 @@
 import { updateApartment } from "../_lib/actions";
 import { SubmitButton } from "./SubmitButton";
 
-export default function  UpdateApartment({currentApartment, apartmentId}) {
-    const { maxCapacity, name, regularPrice, discount, discription, image } = currentApartment;
-    
-    return(
-     <form
-        action={async (formData) => {
-          await updateApartment(apartmentId, formData);
-        }}
-        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
-      >
-        <div className="space-y-2">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            defaultValue={name}
-            id="name"
-            required
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter name"
-          />
-        </div>
-  
-        <div className="space-y-2">
-          <label htmlFor="maxCapacity">Max capacity</label>
+export default function UpdateApartment({ currentApartment, apartmentId }) {
+  const { maxCapacity, name, regularPrice, discount, discription, image } =
+    currentApartment;
+
+  return (
+    <form
+      action={async (formData) => {
+        await updateApartment(apartmentId, formData);
+      }}
+      className="
+        bg-primary-900
+        rounded-xl
+        p-5
+        sm:p-8
+        lg:p-10
+        shadow-xl
+        space-y-8
+      "
+    >
+      {/* Name */}
+
+      <div className="grid gap-2">
+        <label htmlFor="name" className="font-medium text-primary-100">
+          Apartment name
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          defaultValue={name}
+          required
+          placeholder="Apartment name"
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            outline-none
+            transition-all
+            focus:ring-2
+            focus:ring-accent-500
+          "
+        />
+      </div>
+
+      {/* Capacity + Price */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid gap-2">
+          <label htmlFor="maxCapacity" className="font-medium text-primary-100">
+            Max capacity
+          </label>
+
           <input
             type="number"
-            defaultValue={maxCapacity}
-            name="maxCapacity"
             id="maxCapacity"
+            name="maxCapacity"
+            defaultValue={maxCapacity}
             required
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter capacity"
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              px-4
+              py-3
+              text-primary-900
+              outline-none
+              focus:ring-2
+              focus:ring-accent-500
+            "
           />
         </div>
-  
-        <div className="space-y-2">
-          <label htmlFor="regularPrice">Regular price</label>
+
+        <div className="grid gap-2">
+          <label
+            htmlFor="regularPrice"
+            className="font-medium text-primary-100"
+          >
+            Price per night
+          </label>
+
           <input
             type="number"
-            defaultValue={regularPrice}
-            name="regularPrice"
             id="regularPrice"
+            name="regularPrice"
+            defaultValue={regularPrice}
             required
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter price"
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              px-4
+              py-3
+              text-primary-900
+              outline-none
+              focus:ring-2
+              focus:ring-accent-500
+            "
           />
         </div>
-  
-        <div className="space-y-2">
-          <label htmlFor="discount">Discount</label>
-          <input
-            type="number"
-            defaultValue={discount}
-            name="discount"
-            id="discount"
-            required
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter discount"
-          />
-        </div>
-  
-        <div className="space-y-2">
-          <label htmlFor="discription">Description</label>
-          <input
-            type="text"
-            defaultValue={discription}
-            name="discription"
-            id="discription"
-            required
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Enter description"
-          />
-        </div>
-  
-        <div className="space-y-2">
-          <label htmlFor="image">Image</label>
-          <input
-            type="file"
-            name="image"
-            id="image"
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Upload image here"
-          />
-        </div>
-  
-        <div className="flex justify-end items-center gap-6">
-          <SubmitButton pendingLabel="Updating apartment...">
-            Update Current Apartment Now
-          </SubmitButton>
-        </div>
-      </form>
-    );
+      </div>
+
+      {/* Discount */}
+
+      <div className="grid gap-2">
+        <label htmlFor="discount" className="font-medium text-primary-100">
+          Discount
+        </label>
+
+        <input
+          type="number"
+          id="discount"
+          name="discount"
+          defaultValue={discount}
+          required
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            outline-none
+            focus:ring-2
+            focus:ring-accent-500
+          "
+        />
+      </div>
+
+      {/* Description */}
+
+      <div className="grid gap-2">
+        <label htmlFor="discription" className="font-medium text-primary-100">
+          Description
+        </label>
+
+        <textarea
+          id="discription"
+          name="discription"
+          defaultValue={discription}
+          rows={5}
+          required
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            outline-none
+            resize-none
+            focus:ring-2
+            focus:ring-accent-500
+          "
+        />
+      </div>
+
+      {/* Image */}
+
+      <div className="grid gap-2">
+        <label htmlFor="image" className="font-medium text-primary-100">
+          Upload new image
+        </label>
+
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          className="
+            block
+            w-full
+            rounded-lg
+            border
+            border-primary-700
+            bg-primary-950
+            px-3
+            py-3
+            text-primary-100
+            file:mr-4
+            file:rounded-md
+            file:border-0
+            file:bg-accent-500
+            file:px-4
+            file:py-2
+            file:text-primary-900
+            file:font-semibold
+            hover:file:bg-accent-600
+          "
+        />
+      </div>
+
+      {/* Button */}
+
+      <div className="flex justify-end pt-4">
+        <SubmitButton pendingLabel="Updating apartment...">
+          Update Apartment
+        </SubmitButton>
+      </div>
+    </form>
+  );
 }
