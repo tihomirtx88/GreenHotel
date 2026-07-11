@@ -38,19 +38,49 @@ export default async function Page({ params }) {
   const { name } = apartment;
 
   return (
-    <div className="max-w-6xl mx-auto mt-8">
+     <div
+      className="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        lg:px-8
+        py-8
+        lg:py-12
+      "
+    >
       <Apartment apartment={apartment} />
 
-      <div>
-        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
-          Reserve {name} today. Pay on arrival.
+      <section className="mt-16 lg:mt-24">
+        <h2
+          className="
+            text-3xl
+            sm:text-4xl
+            lg:text-5xl
+            font-semibold
+            text-center
+            text-accent-400
+            mb-8
+            lg:mb-12
+            leading-tight
+          "
+        >
+          Reserve{" "}
+          <span className="text-primary-100">
+            {apartment.name}
+          </span>{" "}
+          today.
+          <br className="hidden sm:block" />
+          <span className="text-primary-300 text-xl sm:text-2xl lg:text-3xl font-normal">
+            Pay on arrival.
+          </span>
         </h2>
 
         <Suspense>
           <Reservation apartment={apartment} />
-          <ReservationReminder/>
+          <ReservationReminder />
         </Suspense>
-      </div>
+      </section>
     </div>
   );
 }
