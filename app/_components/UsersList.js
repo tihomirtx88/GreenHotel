@@ -7,49 +7,49 @@ import { deleteUser } from "../_lib/actions";
 
 
 export default function UsersList() {
-  const [users, setUsers] = useState([]);
+ const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    const loadUsers = async () => {
+    async function loadUsers() {
       setIsLoading(true);
+
       try {
         const data = await fetchAllUsers(page, 10);
+
         setUsers((prev) => {
-          const userMap = new Map();
-          // Add existing users to the map
-          prev.forEach((user) => userMap.set(user.id, user));
-          // Add new users to the map
-          data.forEach((user) => userMap.set(user.id, user));
-          // Convert map back to an array
-          return Array.from(userMap.values());
+          const map = new Map();
+
+          prev.forEach((user) => map.set(user.id, user));
+          data.forEach((user) => map.set(user.id, user));
+
+          return [...map.values()];
         });
+
         setHasMore(data.length === 10);
       } catch (err) {
         console.error(err);
       } finally {
         setIsLoading(false);
       }
-    };
+    }
 
     loadUsers();
   }, [page]);
 
-  const loadMore = () => {
-    if (hasMore && !isLoading) {
+  function loadMore() {
+    if (!isLoading && hasMore) {
       setPage((prev) => prev + 1);
     }
-  };
+  }
 
-  const [optimisticBookigns, optimisticDelete] = useOptimistic(
-    // Current state
+  const [optimisticUsers, optimisticDelete] = useOptimistic(
     users,
-    // Feature state function
-    (currUsers, userId) => {
-      return currUsers.filter((user) => user.id !== userId);
-    }
+    (currentUsers, userId) =>
+      currentUsers.filter((user) => user.id !== userId)
   );
 
   async function handleDelete(userId) {
@@ -57,26 +57,79 @@ export default function UsersList() {
     await deleteUser(userId);
   }
 
+  if (!isLoading && optimisticUsers.length === 0)
+    return (
+      <div className="py-16 text-center">
+        <p className="text-xl text-primary-400">
+          No users found.
+        </p>
+      </div>
+    );
+
   return (
-    <div>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-        {optimisticBookigns.map((user) => (
-          <UserCard user={user} key={user.id} onDelete={handleDelete} />
+    <div className="space-y-10">
+
+      {/* Cards */}
+
+      <div
+        className="
+          grid
+          grid-cols-1
+          xl:grid-cols-2
+          gap-6
+          lg:gap-8
+        "
+      >
+        {optimisticUsers.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
 
-      <div className="text-center mt-8">
+      {/* Footer */}
+
+      <div className="flex justify-center">
+
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="flex items-center gap-3 py-4">
+
+            <div className="h-5 w-5 rounded-full border-2 border-accent-500 border-t-transparent animate-spin" />
+
+            <span className="text-primary-300">
+              Loading users...
+            </span>
+
+          </div>
         ) : hasMore ? (
           <button
-            className="px-4 py-2 bg-primary-600 text-white rounded"
             onClick={loadMore}
+            className="
+              rounded-lg
+              bg-accent-500
+              px-6
+              py-3
+
+              font-semibold
+              text-primary-900
+
+              shadow-md
+
+              transition-all
+              duration-300
+
+              hover:bg-accent-600
+              hover:scale-[1.02]
+            "
           >
-            Load More
+            Load More Users
           </button>
         ) : (
-          <p>No more users to load.</p>
+          <p className="text-primary-400 text-center">
+            You have reached the end of the list.
+          </p>
         )}
       </div>
     </div>
