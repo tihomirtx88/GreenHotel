@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
 import {
-    CalendarDaysIcon,
-    HomeIcon,
-    UserIcon,
-  } from '@heroicons/react/24/solid';
-  import SignOutButton from './SignOutButton';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-  
-  const navLinks = [
-    {
-      name: 'Home',
-      href: '/account',
-      icon: <HomeIcon className='h-5 w-5 text-primary-600' />,
-    },
-    {
-      name: 'Reservations',
-      href: '/account/reservations',
-      icon: <CalendarDaysIcon className='h-5 w-5 text-primary-600' />,
-    },
-    {
-      name: 'Guest profile',
-      href: '/account/profile',
-      icon: <UserIcon className='h-5 w-5 text-primary-600' />,
-    },
-  ];
-  
-  function SideNavigation() {
-    const pathname = usePathname();
-    return (
-      <nav
+  CalendarDaysIcon,
+  HomeIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
+import SignOutButton from "./SignOutButton";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navLinks = [
+  {
+    name: "Home",
+    href: "/account",
+    icon: HomeIcon,
+  },
+  {
+    name: "Reservations",
+    href: "/account/reservations",
+    icon: CalendarDaysIcon,
+  },
+  {
+    name: "Guest profile",
+    href: "/account/profile",
+    icon: UserIcon,
+  },
+];
+
+function SideNavigation() {
+  const pathname = usePathname();
+  return (
+    <nav
       className="
         border-r
         border-primary-800
@@ -88,9 +88,7 @@ import { usePathname } from 'next/navigation';
                   `}
                 />
 
-                <span className="truncate">
-                  {link.name}
-                </span>
+                <span className="truncate">{link.name}</span>
               </Link>
             </li>
           );
@@ -101,8 +99,7 @@ import { usePathname } from 'next/navigation';
         </li>
       </ul>
     </nav>
-    );
-  }
-  
-  export default SideNavigation;
-  
+  );
+}
+
+export default SideNavigation;

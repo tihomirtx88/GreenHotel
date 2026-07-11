@@ -47,7 +47,7 @@ export async function updateUser(userId, formData) {
     nationalID: formData.get("nationalID"),
     nationality: formData.get("nationality"),
     countryFlag: formData.get("countryFlag"),
-    admin: formData.get("admin"),
+    admin: formData.get("admin") === "true",
   };
 
   await updateGuest(userId, updatedUser);
@@ -179,11 +179,11 @@ export async function createUser(formData) {
     nationalID: formData.get("nationalID"),
     nationality: formData.get("nationality"),
     countryFlag: formData.get("countryFlag"),
-    admin: formData.get("admin"),
+    admin: formData.get("admin") === "true",
   };
 
   await createGuest(newUser);
-  revalidatePath("users");
+  revalidatePath("/users");
   redirect("/thankyou");
 }
 
@@ -216,7 +216,12 @@ export async function deleteReservation(bookingId) {
 
 export async function deleteUser(userId) {
   const session = await auth();
-  if (!session) throw new Error("You must to logged in!");
+
+  if (!session) throw new Error("You must be logged in!");
+
+  if (session.user.guestId === userId) {
+    throw new Error("You cannot delete your own account.");
+  }
 
   await deleteGuest(userId);
 

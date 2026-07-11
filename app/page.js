@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HomeImage from "@/public/CasaSalvaje_Archdaily_33.jpg";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         priority
         quality={90}
         placeholder="blur"
-        src={Homeimage}
+        src={HomeImage}
         alt="Mountains and forests with two cabins"
         className="object-cover object-center brightness-75"
       />
