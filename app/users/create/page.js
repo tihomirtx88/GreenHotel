@@ -12,7 +12,20 @@ export const metadata = {
 export default async function Page() {
   return (
     <div>
-      <h1 className="text-8xl text-primary-50 my-10 tracking-tight font-normal">
+      <h1
+        className="
+text-4xl
+sm:text-5xl
+md:text-6xl
+lg:text-7xl
+xl:text-8xl
+text-primary-50
+font-normal
+tracking-tight
+leading-tight
+mb-8
+"
+      >
         Create new user.
       </h1>
 

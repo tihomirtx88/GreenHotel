@@ -151,16 +151,17 @@ export async function getSettings() {
 }
 
 export async function getCountries() {
-  const res = await fetch("https://restcountries.com/api/v1/all");
+  const { data, error } = await supabase
+    .from("countries")
+    .select("*")
+    .order("name");
 
-  const data = await res.json();
+  if (error) {
+    console.error(error);
+    throw new Error("Countries could not be loaded");
+  }
 
-  console.log(data);
-
-  return data.map(country => ({
-    name: country.name.common,
-    flag: country.flags.svg,
-  }));
+  return data;
 }
 
 /////////////

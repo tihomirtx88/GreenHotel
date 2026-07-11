@@ -1,18 +1,61 @@
-import Link from "next/link";
 import Image from "next/image";
-import Homeimage from "@/public/green-3.jpg";
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main className="mt-24">
-      <Image quality={80} className="w-full object-cover object-top" placeholder="blur" fill src={Homeimage} alt="Mountains and forests with two cabins" />
+    <main className="relative mt-16 lg:mt-24 min-h-screen">
+      <Image
+        fill
+        priority
+        quality={90}
+        placeholder="blur"
+        src={Homeimage}
+        alt="Mountains and forests with two cabins"
+        className="object-cover object-center brightness-75"
+      />
 
-      <div className="relative z-10 text-center">
-        <h1 className="text-8xl text-primary-50 my-10 tracking-tight font-normal">
+      <div
+        className="
+        relative
+        z-10
+        flex
+        flex-col
+        items-center
+        justify-center
+        min-h-screen
+        px-6
+        text-center"
+      >
+        <h1
+          className="
+          text-4xl
+          sm:text-5xl
+          md:text-6xl
+          lg:text-7xl
+          xl:text-8xl
+          text-primary-50
+          tracking-tight
+          leading-tight
+          mb-8"
+        >
           Welcome to paradise.
         </h1>
+
         <Link
           href="/apartments"
-          className="bg-accent-500 px-8 py-6 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
+          className="
+          bg-accent-500
+          hover:bg-accent-600
+          transition-all
+          duration-300
+          rounded-md
+          px-6
+          sm:px-8
+          py-4
+          sm:py-5
+          text-base
+          sm:text-lg
+          font-semibold"
         >
           Explore luxury rooms
         </Link>
