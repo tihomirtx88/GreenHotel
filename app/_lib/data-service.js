@@ -328,29 +328,26 @@ export async function deleteGuest(id) {
   return data;
 }
 
-export async function fetchAllUsers(page = 1, limit = 8) {
+export async function fetchAllUsers(page = 1, limit = 8, search = "") {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
-  const { data, error } = await supabase
+
+  let query = supabase
     .from("guests")
-    .select("*")
-    .range(start, end);
+    .select("*");
+
+  if (search) {
+    query = query.or(
+      `fullName.ilike.%${search}%,email.ilike.%${search}%,nationality.ilike.%${search}%`
+    );
+  }
+
+  const { data, error } = await query.range(start, end);
 
   if (error) {
     console.error(error);
-    throw new Error("Fetching all users are not possible");
+    throw new Error("Fetching all users is not possible");
   }
 
-  // Create a map to track unique IDs
-  const uniqueUsers = [];
-  const seenIds = new Set();
-
-  for (const user of data) {
-    if (!seenIds.has(user.id)) {
-      uniqueUsers.push(user);
-      seenIds.add(user.id);
-    }
-  }
-
-  return uniqueUsers;
+  return data;
 }

@@ -6,7 +6,7 @@ import { fetchAllUsers } from "../_lib/data-service";
 import { deleteUser } from "../_lib/actions";
 
 
-export default function UsersList() {
+export default function UsersList({search}) {
  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -14,11 +14,16 @@ export default function UsersList() {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
+    setUsers([]);
+    setPage(1);
+  }, [search]);
+
+  useEffect(() => {
     async function loadUsers() {
       setIsLoading(true);
 
       try {
-        const data = await fetchAllUsers(page, 10);
+        const data = await fetchAllUsers(page, 10, search);
 
         setUsers((prev) => {
           const map = new Map();
@@ -38,7 +43,7 @@ export default function UsersList() {
     }
 
     loadUsers();
-  }, [page]);
+  }, [page, search]);
 
   function loadMore() {
     if (!isLoading && hasMore) {

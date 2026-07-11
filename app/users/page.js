@@ -2,6 +2,7 @@
 import { Suspense } from "react";
 import UsersList from "../_components/UsersList";
 import Spinner from "../_components/Spinner";
+import SearchUsers from "../_components/SearchUsers";
 
 
 
@@ -9,7 +10,9 @@ export const metadata = {
   title: "Creating user",
 };
 
-export default async function Page() {
+export default async function Page({searchParams }) {
+
+  const search = searchParams?.search ?? "";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -29,6 +32,10 @@ export default async function Page() {
 
       {/* Users */}
 
+      <div className="flex justify-end mb-8">
+        <SearchUsers />
+      </div>
+
       <Suspense
         fallback={
           <div className="flex justify-center py-20">
@@ -36,7 +43,7 @@ export default async function Page() {
           </div>
         }
       >
-        <UsersList />
+        <UsersList search={search}/>
       </Suspense>
 
     </div>
