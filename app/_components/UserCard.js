@@ -1,4 +1,8 @@
-import { PencilSquareIcon, ShieldCheckIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+  PencilSquareIcon,
+  ShieldCheckIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteUser from "./DeleteUser";
@@ -8,7 +12,7 @@ export default function UserCard({ user, onDelete }) {
   const fallbackFlag = "/images/default-flag.png";
 
   return (
-      <div
+    <div
       className="
         border
         border-primary-800
@@ -19,35 +23,24 @@ export default function UserCard({ user, onDelete }) {
       "
     >
       <div className="flex flex-col lg:flex-row">
-
         {/* Information */}
 
         <div className="flex-1 p-5 sm:p-7">
-
           <h3 className="text-2xl sm:text-3xl font-semibold text-accent-500 mb-6">
             {user.fullName}
           </h3>
 
           <div className="space-y-4">
+            <InfoRow label="Email">{user.email}</InfoRow>
 
-            <InfoRow label="Email">
-              {user.email}
-            </InfoRow>
+            <InfoRow label="National ID">{user.nationalID}</InfoRow>
 
-            <InfoRow label="National ID">
-              {user.nationalID}
-            </InfoRow>
-
-            <InfoRow label="Nationality">
-              {user.nationality}
-            </InfoRow>
+            <InfoRow label="Nationality">{user.nationality}</InfoRow>
 
             <div className="flex items-center gap-3">
               <UserIcon className="w-5 h-5 text-primary-500" />
 
-              <span className="font-medium">
-                Country:
-              </span>
+              <span className="font-medium">Country:</span>
 
               <Image
                 src={user.countryFlag || fallbackFlag}
@@ -61,21 +54,18 @@ export default function UserCard({ user, onDelete }) {
             <div className="flex items-center gap-3">
               <ShieldCheckIcon className="w-5 h-5 text-primary-500" />
 
-              <span className="font-medium">
-                Role:
-              </span>
+              <span className="font-medium">Role:</span>
 
               <span
                 className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                  user.admin
+                  user.admin === "admin"
                     ? "bg-green-700 text-green-100"
                     : "bg-primary-700 text-primary-200"
                 }`}
               >
-                {user.admin ? "Administrator" : "User"}
+                {user.admin === "admin" ? "Administrator" : "Regular User"}
               </span>
             </div>
-
           </div>
         </div>
 
@@ -123,14 +113,10 @@ export default function UserCard({ user, onDelete }) {
                 group-hover:text-primary-900
               "
             />
-
             Edit
           </Link>
 
-          <DeleteUser
-            userId={user.id}
-            onDelete={onDelete}
-          />
+          <DeleteUser userId={user.id} onDelete={onDelete} />
         </div>
       </div>
     </div>
@@ -142,13 +128,9 @@ function InfoRow({ label, children }) {
     <div className="flex items-center gap-3">
       <UserIcon className="w-5 h-5 text-primary-500" />
 
-      <span className="font-medium">
-        {label}:
-      </span>
+      <span className="font-medium">{label}:</span>
 
-      <span className="text-primary-200 break-all">
-        {children}
-      </span>
+      <span className="text-primary-200 break-all">{children}</span>
     </div>
   );
 }

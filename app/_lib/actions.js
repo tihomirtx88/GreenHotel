@@ -47,7 +47,7 @@ export async function updateUser(userId, formData) {
     nationalID: formData.get("nationalID"),
     nationality: formData.get("nationality"),
     countryFlag: formData.get("countryFlag"),
-    admin: formData.get("admin") === "true",
+    admin: formData.get("admin"),
   };
 
   await updateGuest(userId, updatedUser);
@@ -179,8 +179,11 @@ export async function createUser(formData) {
     nationalID: formData.get("nationalID"),
     nationality: formData.get("nationality"),
     countryFlag: formData.get("countryFlag"),
-    admin: formData.get("admin") === "true",
+    admin: formData.get("admin"),
   };
+
+  console.log(newUser);
+
 
   await createGuest(newUser);
   revalidatePath("/users");

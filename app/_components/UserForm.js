@@ -210,11 +210,11 @@ export default function UserForm() {
             Select role...
           </option>
 
-          <option value="true">
+          <option value="admin">
             Administrator
           </option>
 
-          <option value="false">
+          <option value="user">
             Regular User
           </option>
         </select>

@@ -52,10 +52,12 @@ export default function UsersList() {
       currentUsers.filter((user) => user.id !== userId)
   );
 
-  async function handleDelete(userId) {
-    optimisticDelete(userId);
-    await deleteUser(userId);
-  }
+ async function handleDelete(userId) {
+  optimisticDelete(userId);
+  await deleteUser(userId);
+
+  setUsers((prev) => prev.filter((user) => user.id !== userId));
+}
 
   if (!isLoading && optimisticUsers.length === 0)
     return (
