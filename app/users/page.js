@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import UsersList from "../_components/UsersList";
 import Spinner from "../_components/Spinner";
-import SearchUsers from "../_components/SearchUsers";
+import Search from "../_components/Search";
 
 
 
@@ -33,7 +33,7 @@ export default async function Page({searchParams }) {
       {/* Users */}
 
       <div className="flex justify-end mb-8">
-        <SearchUsers />
+        <Search placeholder="Search users..." />
       </div>
 
       <Suspense
