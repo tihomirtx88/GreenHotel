@@ -8,28 +8,62 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const session = await auth();
+   const session = await auth();
   const quest = await getGuest(session?.user?.email);
 
-  return (
-    <div>
-      <h2 className="font-semibold text-2xl text-accent-400 mb-4">
-        Update your guest profile
-      </h2>
+  if (!quest) {
+    return (
+      <div className="py-16 text-center">
+        <h2 className="text-2xl font-semibold text-accent-400">
+          Guest profile not found
+        </h2>
 
-      <p className="text-lg mb-8 text-primary-200">
-        Providing the following information will make your check-in process
-        faster and smoother. See you soon!
-      </p>
-      {/* The way how i next.js is possible to pass SC to CC like prop  */}
-      <UpdateProfileForm quest= {quest}>
+        <p className="mt-4 text-primary-300">
+          Please sign in again or contact support.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6">
+
+      <div className="mb-8">
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-accent-400">
+          Update your guest profile
+        </h1>
+
+        <p className="mt-4 text-base sm:text-lg text-primary-300 leading-7">
+          Providing the following information will make your check-in process
+          faster and smoother. We look forward to welcoming you!
+        </p>
+
+      </div>
+
+      <UpdateProfileForm quest={quest}>
         <SelectCountry
           name="nationality"
           id="nationality"
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
           defaultCountry={quest.nationality}
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            shadow-sm
+
+            outline-none
+            transition
+
+            focus:ring-2
+            focus:ring-accent-500
+          "
         />
       </UpdateProfileForm>
+
     </div>
   );
 }
