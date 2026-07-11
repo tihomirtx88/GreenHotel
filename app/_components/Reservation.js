@@ -17,12 +17,39 @@ export default async function Reservation({apartment}) {
   const session = await auth();
 
   return (
-    <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
+      <section
+      className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+        border
+        border-primary-800
+        rounded-xl
+        overflow-hidden
+        bg-primary-950
+        shadow-lg
+        min-h-[400px]
+      "
+    >
+      <div className="border-b lg:border-b-0 lg:border-r border-primary-800">
+        <DateSelector
+          settings={settings}
+          bookedDates={bookedDates}
+          apartment={apartment}
+        />
+      </div>
 
-      <DateSelector settings={settings} bookedDates={bookedDates} apartment={apartment}/>
-      {session?.user ?<ReservationForm apartment={apartment} user={session.user}/> : <LoginMessage/>}
-
-    </div>
+      <div className="flex">
+        {session?.user ? (
+          <ReservationForm
+            apartment={apartment}
+            user={session.user}
+          />
+        ) : (
+          <LoginMessage />
+        )}
+      </div>
+    </section>
 
   );
 }
