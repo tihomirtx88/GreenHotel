@@ -131,6 +131,8 @@ export async function crreateApartment(formData) {
   const session = await auth();
   if (!session) throw new Error("You must to logged in!");
 
+
+
   const newApartment = {
     name: formData.get("name"),
     maxCapacity: Number(formData.get("maxCapacity")),

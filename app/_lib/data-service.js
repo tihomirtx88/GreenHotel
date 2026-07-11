@@ -40,6 +40,9 @@ export const getCabins = async function () {
     .select("id, name, maxCapacity, regularPrice, discount, image, latitude, longitude")
     .order("name");
 
+      console.log("DATA:", data);
+  console.log("ERROR:", error);
+
   // await new Promise((res) => setTimeout(res, 1000));
 
   if (error) {
@@ -190,7 +193,7 @@ export async function createBooking(newBooking) {
 }
 
 export async function createCabin(newCabin) {
-  const hasImagePath = newCabin.image?.startWith?.(supabaseUrl);
+  const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
   //CReating image name adn replace with one server will create
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
@@ -210,9 +213,11 @@ export async function createCabin(newCabin) {
   // With select and single will return the object from database
   const { data, error } = await query.select().single();
 
+
   if (error) {
-    console.error(error);
-    throw new Error("Cabin could not be created");
+    console.log("INSERT ERROR:");
+    console.dir(error, { depth: null });
+    throw error;
   }
 
   //2 Upload image
@@ -226,10 +231,9 @@ export async function createCabin(newCabin) {
   //3. Delete the cabin IF there was an error uplaoding image
   if (storageError) {
     await supabase.from("cabins").delete().eq("id", data.id);
-    console.error(storageError);
-    throw new Error(
-      "Cabin image could not be uploaded and the cabin was not created"
-    );
+      console.log("STORAGE ERROR:");
+  console.dir(storageError, { depth: null });
+  throw storageError;
   }
 
   return data;
