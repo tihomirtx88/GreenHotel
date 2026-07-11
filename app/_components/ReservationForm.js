@@ -29,89 +29,192 @@ export default function ReservationForm({ apartment, user }) {
   const createBookingWithData = createReservation.bind(null, reservationData);
 
   return (
-    <div className="scale-[1.01]">
-      <div className="bg-primary-800 text-primary-300 px-16 py-2 flex justify-between items-center">
-        <p>Logged in as</p>
+    <div className="flex flex-col h-full">
+      {/* Header */}
 
-        <div className="flex gap-4 items-center">
+      <div
+        className="
+          bg-primary-800
+          px-5
+          sm:px-8
+          lg:px-10
+          py-4
+          flex
+          flex-col
+          sm:flex-row
+          sm:justify-between
+          gap-4
+        "
+      >
+        <p className="text-primary-300 font-medium">
+          Logged in as
+        </p>
+
+        <div className="flex items-center gap-3">
           <img
-            referrerPolicy="no-referrer"
-            className="h-8 rounded-full"
             src={user.image}
             alt={user.name}
+            referrerPolicy="no-referrer"
+            className="
+              w-10
+              h-10
+              rounded-full
+              border
+              border-primary-700
+            "
           />
-          <p>{user.name}</p>
+
+          <span className="font-semibold">
+            {user.name}
+          </span>
         </div>
       </div>
 
-      {/* <form action={createBookingWithData}  */}
+      {/* Form */}
+
       <form
         action={async (formData) => {
           await createBookingWithData(formData);
           resetRange();
         }}
-        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
+        className="
+          flex
+          flex-col
+          gap-6
+          bg-primary-900
+          p-5
+          sm:p-8
+          lg:p-10
+          flex-1
+        "
       >
+        {/* Guests */}
+
         <div className="space-y-2">
-          <label htmlFor="numGuests">How many guests?</label>
-          <select
-            name="numGuests"
-            id="numGuests"
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            required
+          <label
+            htmlFor="numGuests"
+            className="font-medium"
           >
-            <option value="" key="">
-              Select number of guests...
+            Number of guests
+          </label>
+
+          <select
+            id="numGuests"
+            name="numGuests"
+            required
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              text-primary-900
+              px-4
+              py-3
+              shadow-sm
+              outline-none
+              focus:ring-2
+              focus:ring-accent-500
+            "
+          >
+            <option value="">
+              Select guests...
             </option>
-            {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-              <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
+
+            {Array.from(
+              { length: maxCapacity },
+              (_, i) => i + 1
+            ).map((guest) => (
+              <option
+                key={guest}
+                value={guest}
+              >
+                {guest}{" "}
+                {guest === 1
+                  ? "guest"
+                  : "guests"}
               </option>
             ))}
           </select>
         </div>
 
+        {/* Notes */}
+
         <div className="space-y-2">
-          <label htmlFor="observations">
-            Anything we should know about your stay?
+          <label
+            htmlFor="observations"
+            className="font-medium"
+          >
+            Special requests
           </label>
+
           <textarea
-            name="observation"
             id="observations"
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            placeholder="Any pets, allergies, special requirements, etc.?"
+            name="observation"
+            rows={5}
+            placeholder="Pets, allergies, arrival time..."
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              text-primary-900
+              px-4
+              py-3
+              resize-none
+              outline-none
+              focus:ring-2
+              focus:ring-accent-500
+            "
           />
         </div>
 
-   
-         <div className="flex gap-2 items-center">
-          <input
-            type="checkbox"
-            id="hasBreakfast"
-            checked={hasBreakfast}
-            className="w-5 h-5"
-          />
-          <label htmlFor="hasBreakfast">Include Breakfast?</label>
+        {/* Checkboxes */}
+
+        <div className="space-y-4">
+          <label className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={hasBreakfast}
+              readOnly
+              className="w-5 h-5 accent-accent-500"
+            />
+
+            Include breakfast
+          </label>
+
+          <label className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={isPaid}
+              readOnly
+              className="w-5 h-5 accent-accent-500"
+            />
+
+            Mark as paid
+          </label>
         </div>
 
-    
-        <div className="flex gap-2 items-center">
-          <input
-            type="checkbox"
-            id="isPaid"
-            checked={isPaid}
-            className="w-5 h-5"
-          />
-          <label htmlFor="isPaid">Mark as Paid?</label>
-        </div>
+        {/* Footer */}
 
-        <div className="flex justify-end items-center gap-6">
-          {!(startDate && endDate) ? (
-            <p className="text-primary-300 text-base">
-              Start by selecting dates
+        <div
+          className="
+            mt-auto
+            flex
+            flex-col
+            sm:flex-row
+            gap-4
+            sm:justify-between
+            sm:items-center
+          "
+        >
+          {!startDate || !endDate ? (
+            <p className="text-primary-400 text-sm">
+              Select your dates to continue.
             </p>
           ) : (
-            <SubmitButton pendingLabel="Reserving...">Reserve Now</SubmitButton>
+            <div className="w-full sm:w-auto">
+              <SubmitButton pendingLabel="Reserving...">
+                Reserve Now
+              </SubmitButton>
+            </div>
           )}
         </div>
       </form>
