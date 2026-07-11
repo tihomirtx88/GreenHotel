@@ -16,9 +16,43 @@ export default function DeleteUser({ userId, onDelete }) {
   }
   
   return (
-    <button onClick={handleDelete} className='group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900'>
-     {!isPending ? <><TrashIcon className='h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors' />
-      <span className='mt-1'>Delete</span></> : <span className='mx-auto'><SpinnerMini/></span>}
+     <button
+      onClick={handleDelete}
+      disabled={isPending}
+      className="
+        group
+        flex
+        items-center
+        justify-center
+        gap-2
+        w-full
+        sm:w-auto
+        px-4
+        py-3
+        rounded-lg
+        border
+        border-primary-800
+        text-sm
+        font-semibold
+        uppercase
+        tracking-wide
+        text-primary-300
+        transition-all
+        duration-300
+        hover:bg-red-600
+        hover:text-white
+        disabled:opacity-60
+        disabled:cursor-not-allowed
+      "
+    >
+      {!isPending ? (
+        <>
+          <TrashIcon className="h-5 w-5 transition-colors" />
+          <span>Delete</span>
+        </>
+      ) : (
+        <SpinnerMini />
+      )}
     </button>
   );
 }
