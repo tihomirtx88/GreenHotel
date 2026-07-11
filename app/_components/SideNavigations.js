@@ -30,25 +30,77 @@ import { usePathname } from 'next/navigation';
   function SideNavigation() {
     const pathname = usePathname();
     return (
-      <nav className='border-r border-primary-900'>
-        <ul className='flex flex-col gap-2 h-full text-lg'>
-          {navLinks.map((link) => (
+      <nav
+      className="
+        border-r
+        border-primary-800
+        bg-primary-950
+        h-full
+      "
+    >
+      <ul
+        className="
+          flex
+          flex-col
+          gap-2
+          p-3
+          h-full
+        "
+      >
+        {navLinks.map((link) => {
+          const Icon = link.icon;
+          const active = pathname === link.href;
+
+          return (
             <li key={link.name}>
               <Link
-                className={`py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 ${pathname === link.href ? "bg-primary-900" : ''}`}
                 href={link.href}
+                className={`
+                  group
+                  flex
+                  items-center
+                  gap-3
+                  rounded-lg
+                  px-4
+                  py-3
+                  transition-all
+                  duration-300
+                  font-medium
+
+                  ${
+                    active
+                      ? "bg-accent-500 text-primary-900 shadow-md"
+                      : "text-primary-200 hover:bg-primary-900 hover:text-primary-100"
+                  }
+                `}
               >
-                {link.icon}
-                <span>{link.name}</span>
+                <Icon
+                  className={`
+                    h-5
+                    w-5
+                    transition-colors
+
+                    ${
+                      active
+                        ? "text-primary-900"
+                        : "text-primary-500 group-hover:text-accent-400"
+                    }
+                  `}
+                />
+
+                <span className="truncate">
+                  {link.name}
+                </span>
               </Link>
             </li>
-          ))}
-  
-          <li className='mt-auto'>
-            <SignOutButton />
-          </li>
-        </ul>
-      </nav>
+          );
+        })}
+
+        <li className="mt-auto pt-3 border-t border-primary-800">
+          <SignOutButton />
+        </li>
+      </ul>
+    </nav>
     );
   }
   
