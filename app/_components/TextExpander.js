@@ -9,15 +9,37 @@ function TextExpander({ children }) {
     : children?.toString().split(' ').slice(0, 40).join(' ') + (children ? '...' : '');
 
   return (
-    <span>
-      {displayText}{' '}
-      <button
-        className='text-primary-700 border-b border-primary-700 leading-3 pb-1'
-        onClick={() => setIsExpanded(!isExpanded)}
+     <div className="space-y-3">
+      <p
+        className="
+          text-primary-300
+          leading-7
+          text-base
+          sm:text-lg
+          transition-all
+          duration-300
+        "
       >
-        {isExpanded ? 'Show less' : 'Show more'}
-      </button>
-    </span>
+        {displayText}
+      </p>
+
+      {shouldCollapse && (
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          className="
+            text-accent-400
+            font-semibold
+            hover:text-accent-300
+            transition-colors
+            underline
+            underline-offset-4
+          "
+        >
+          {isExpanded ? "Show less ↑" : "Show more ↓"}
+        </button>
+      )}
+    </div>
   );
 }
 
