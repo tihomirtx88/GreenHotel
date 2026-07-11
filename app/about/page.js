@@ -11,79 +11,132 @@ export const metadata = {
 
 export default async function Page() {
   const apartments = await getCabins();
+
   return (
-    <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
-      <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+    <div
+      className="
+        grid
+        grid-cols-1
+        lg:grid-cols-5
+        gap-y-16
+        lg:gap-y-32
+        gap-x-8
+        lg:gap-x-24
+        items-center
+        text-base
+        lg:text-lg
+        px-4
+        sm:px-6
+      "
+    >
+      {/* -------- Section 1 -------- */}
+
+      <div className="lg:col-span-3 order-2 lg:order-1">
+        <h1 className="text-3xl md:text-4xl font-medium text-accent-400 mb-8">
           Welcome to The Wild Oasis
         </h1>
 
-        <div className="space-y-8">
+        <div className="space-y-6 text-primary-200 leading-8">
           <p>
             Where natures beauty and comfortable living blend seamlessly. Hidden
             away in the heart of the Italian Dolomites, this is your paradise
-            away from home. But its not just about the luxury cabins. Its about
-            the experience of reconnecting with nature and enjoying simple
-            pleasures with family.
+            away from home. But it’s not just about the luxury cabins. It’s
+            about reconnecting with nature and enjoying unforgettable moments
+            with family and friends.
           </p>
+
           <p>
-            Our {apartments.length} luxury cabins provide a cozy base, but the real freedom and
-            peace youll find in the surrounding mountains. Wander through lush
-            forests, breathe in the fresh air, and watch the stars twinkle above
-            from the warmth of a campfire or your hot tub.
+            Our{" "}
+            <span className="font-semibold text-accent-400">
+              {apartments.length}
+            </span>{" "}
+            luxury apartments provide a cozy base, while the surrounding
+            mountains, forests and lakes create an unforgettable holiday
+            experience.
           </p>
+
           <p>
-            This is where memorable moments are made, surrounded by natures
-            splendor. Its a place to slow down, relax, and feel the joy of being
-            together in a beautiful setting.
+            Wake up with breathtaking mountain views, explore beautiful hiking
+            trails, relax in a private hot tub under the stars and experience
+            the peace that only nature can offer.
           </p>
         </div>
       </div>
 
-      <div className="col-span-2">
+      <div className="lg:col-span-2 order-1 lg:order-2">
         <Image
           src={image1}
-          alt="Family sitting around a fire pit in front of cabin"
+          alt="Family sitting around a fire pit in front of apartment"
           placeholder="blur"
+          className="rounded-2xl w-full h-auto shadow-xl"
         />
       </div>
 
-      <div className="col-span-2 relative aspect-square">
+      {/* -------- Section 2 -------- */}
+
+      <div
+        className="
+          lg:col-span-2
+          relative
+          aspect-square
+          w-full
+          max-w-lg
+          mx-auto
+          order-3
+        "
+      >
         <Image
-          className="object-cover"
-          fill
           src="/about-2.jpg"
+          fill
+          className="object-cover rounded-2xl shadow-xl"
           alt="Family that manages The Wild Oasis"
         />
       </div>
 
-      <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+      <div className="lg:col-span-3 order-4">
+        <h1 className="text-3xl md:text-4xl font-medium text-accent-400 mb-8">
           Managed by our family since 1962
         </h1>
 
-        <div className="space-y-8">
+        <div className="space-y-6 text-primary-200 leading-8">
           <p>
-            Since 1962, The Wild Oasis has been a cherished family-run retreat.
-            Started by our grandparents, this haven has been nurtured with love
-            and care, passing down through our family as a testament to our
-            dedication to creating a warm, welcoming environment.
-          </p>
-          <p>
-            Over the years, weve maintained the essence of The Wild Oasis,
-            blending the timeless beauty of the mountains with the personal
-            touch only a family business can offer. Here, youre not just a
-            guest; youre part of our extended family. So join us at The Wild
-            Oasis soon, where tradition meets tranquility, and every visit is
-            like coming home.
+            Since 1962, The Wild Oasis has been a cherished family retreat.
+            Started by our grandparents, this place has been lovingly cared for
+            through generations.
           </p>
 
-          <div>
+          <p>
+            Weve preserved the peaceful atmosphere while continuously improving
+            the comfort of every apartment. Here, you are not simply a guest —
+            you become part of our extended family.
+          </p>
+
+          <p>
+            Join us and experience authentic hospitality surrounded by the
+            breathtaking beauty of the Italian Dolomites.
+          </p>
+
+          <div className="pt-2">
             <a
               href="/apartments"
-              className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
+              className="
+                inline-flex
+                items-center
+                rounded-md
+                bg-accent-500
+                hover:bg-accent-600
+                transition-all
+                duration-300
+                px-6
+                sm:px-8
+                py-4
+                text-base
+                sm:text-lg
+                font-semibold
+                text-primary-900
+              "
             >
-              Explore our luxury cabins
+              Explore our luxury apartments →
             </a>
           </div>
         </div>
