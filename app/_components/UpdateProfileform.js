@@ -7,54 +7,156 @@ export default function UpdateProfileForm({ quest, children }) {
   const { countryFlag, email, fullName, nationalID, nationality, id } = quest;
 
   return (
-    <form
+   <form
       action={updateProfile}
-      className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+      className="
+        bg-primary-900
+        rounded-xl
+        shadow-lg
+
+        p-5
+        sm:p-8
+        lg:p-10
+
+        flex
+        flex-col
+        gap-6
+      "
     >
+      {/* Full name */}
+
       <div className="space-y-2">
-        <label>Full name</label>
+        <label className="font-medium">
+          Full name
+        </label>
+
         <input
-          defaultValue={fullName}
           name="fullName"
+          defaultValue={fullName}
           disabled
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            shadow-sm
+
+            disabled:bg-primary-700
+            disabled:text-primary-300
+            disabled:cursor-not-allowed
+          "
         />
       </div>
 
+      {/* Email */}
+
       <div className="space-y-2">
-        <label>Email address</label>
+        <label className="font-medium">
+          Email address
+        </label>
+
         <input
-          disabled
           name="email"
           defaultValue={email}
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          disabled
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            shadow-sm
+
+            disabled:bg-primary-700
+            disabled:text-primary-300
+            disabled:cursor-not-allowed
+          "
         />
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <label htmlFor="nationality">Where are you from?</label>
-          <img
-            defaultValue={countryFlag}
-            src={countryFlag}
-            alt="Country flag"
-            className="h-5 rounded-sm"
-          />
+      {/* Country */}
+
+      <div className="space-y-3">
+        <div
+          className="
+            flex
+            flex-col
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+            gap-2
+          "
+        >
+          <label
+            htmlFor="nationality"
+            className="font-medium"
+          >
+            Where are you from?
+          </label>
+
+          {countryFlag && (
+            <img
+              src={countryFlag}
+              alt="Country flag"
+              className="
+                h-6
+                w-auto
+                rounded
+                border
+                border-primary-700
+              "
+            />
+          )}
         </div>
+
         {children}
       </div>
 
+      {/* National ID */}
+
       <div className="space-y-2">
-        <label htmlFor="nationalID">National ID number</label>
+        <label
+          htmlFor="nationalID"
+          className="font-medium"
+        >
+          National ID
+        </label>
+
         <input
-          defaultValue={nationalID}
+          id="nationalID"
           name="nationalID"
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+          defaultValue={nationalID}
+          className="
+            w-full
+            rounded-lg
+            bg-primary-200
+            px-4
+            py-3
+            text-primary-900
+            shadow-sm
+
+            outline-none
+            transition
+
+            focus:ring-2
+            focus:ring-accent-500
+          "
         />
       </div>
-     
-      <div className="flex justify-end items-center gap-6">
-        <SubmitButton pendingLabel="Updating...">
+
+      {/* Submit */}
+
+      <div
+        className="
+          flex
+          justify-end
+          pt-4
+        "
+      >
+        <SubmitButton pendingLabel="Updating profile...">
           Update Profile
         </SubmitButton>
       </div>
