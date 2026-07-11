@@ -15,25 +15,40 @@ export default async function Page({searchParams}) {
   const filter = searchParams?.capacity ?? "all";
 
   return (
-    <div>
-      <h1 className="text-4xl mb-5 text-accent-400 font-medium">
-        Our Luxury apartments
-      </h1>
-      <p className="text-primary-200 text-lg mb-10">
-        Cozy yet luxurious apartments, located right in the heart of the Italian
-        Dolomites. Imagine waking up to beautiful mountain views, spending your
-        days exploring the dark forests around, or just relaxing in your private
-        hot tub under the stars. Enjoy natures beauty in your own little home
-        away from home. The perfect spot for a peaceful, calm vacation. Welcome
-        to paradise.
-      </p>
+   <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-      <div className="flex justify-end mb-8">
-        <Filter/>
+      {/* Header */}
+
+      <div className="mb-10">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent-400">
+          Our Luxury Apartments
+        </h1>
+
+        <p className="mt-5 text-base sm:text-lg leading-8 text-primary-300 max-w-4xl">
+          Cozy yet luxurious apartments located in the heart of the Italian
+          Dolomites. Wake up to breathtaking mountain views, spend your days
+          exploring peaceful forests, or simply relax in your private hot tub
+          beneath the stars. Experience nature without sacrificing comfort.
+        </p>
       </div>
 
-      <Suspense fallback={<Spinner/>} key={filter}>
-        <ApartmentsList filter={filter}/>
+      {/* Filter */}
+
+      <div className="flex justify-center lg:justify-end mb-10">
+        <Filter />
+      </div>
+
+      {/* Apartments */}
+
+      <Suspense
+        key={filter}
+        fallback={
+          <div className="py-20 flex justify-center">
+            <Spinner />
+          </div>
+        }
+      >
+        <ApartmentsList filter={filter} />
       </Suspense>
     </div>
   );
