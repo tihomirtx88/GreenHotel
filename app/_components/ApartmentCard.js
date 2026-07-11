@@ -9,62 +9,158 @@ function ApartmentCard({ apartment, onDelete }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = apartment;
 
   return (
-    <div className="flex border-primary-800 border">
-      <div className="relative" style={{ flex: "10" }}>
+    <div
+      className="
+        group
+        overflow-hidden
+        rounded-xl
+        border border-primary-800
+        bg-primary-950
+        shadow-lg
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-2xl
+        hover:border-accent-500
+        flex
+        flex-col
+        lg:flex-row
+      "
+    >
+      {/* IMAGE */}
+
+      <div
+        className="
+          relative
+          w-full
+          h-64
+          lg:h-auto
+          lg:w-2/5
+          overflow-hidden
+        "
+      >
         <Image
-          fill
           src={image}
-          alt={`apartment ${name}`}
-          className="object-cover border-r border-primary-800"
+          alt={`Apartment ${name}`}
+          fill
+          priority={false}
+          sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 40vw"
+          className="
+            object-cover
+            transition-transform
+            duration-500
+            group-hover:scale-105
+          "
         />
       </div>
 
-      <div className="flex-grow">
-        <div className="pt-5 pb-4 px-7 bg-primary-950">
-          <h3 className="text-accent-500 font-semibold text-2xl mb-3">
-            apartment {name}
+      {/* CONTENT */}
+
+      <div
+        className="
+          flex
+          flex-col
+          flex-1
+          justify-between
+        "
+      >
+        {/* TOP */}
+
+        <div className="p-6">
+          <h3
+            className="
+              text-xl
+              md:text-2xl
+              text-accent-500
+              font-semibold
+              mb-4
+            "
+          >
+            Apartment {name}
           </h3>
 
-          <div className="flex gap-3 items-center mb-2">
-            <UsersIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200">
+          <div className="flex items-center gap-3 mb-6">
+            <UsersIcon className="h-5 w-5 text-accent-400 flex-shrink-0" />
+
+            <p className="text-primary-200 text-base md:text-lg">
               For up to <span className="font-bold">{maxCapacity}</span> guests
             </p>
           </div>
 
-          <p className="flex gap-3 justify-end items-baseline">
+          <div className="flex justify-end items-end gap-2">
             {discount > 0 ? (
               <>
-                <span className="text-3xl font-[350]">
+                <span className="text-2xl md:text-3xl font-light">
                   ${regularPrice - discount}
                 </span>
-                <span className="line-through font-semibold text-primary-600">
+
+                <span className="line-through text-primary-500 text-lg">
                   ${regularPrice}
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-[350]">${regularPrice}</span>
+              <span className="text-2xl md:text-3xl font-light">
+                ${regularPrice}
+              </span>
             )}
-            <span className="text-primary-200">/ night</span>
-          </p>
+
+            <span className="text-primary-300 text-sm md:text-base">
+              / night
+            </span>
+          </div>
         </div>
 
-        <div className="bg-primary-950 border-t border-t-primary-800 text-right flex justify-start items-center">
-          <>
-            <Link
-              href={`/apartments/edit/${id}`}
-              className=" flex !important items-center !important gap-1 !important border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
-            >
-              <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
-              <span className="mt-1">Edit</span>
-            </Link>
-            <DeleteCabin apartmentId={id} onDelete={onDelete} />
-          </>
+        {/* BUTTONS */}
+
+        <div
+          className="
+            grid
+            grid-cols-1
+            sm:grid-cols-3
+            border-t
+            border-primary-800
+          "
+        >
+          <Link
+            href={`/apartments/edit/${id}`}
+            className="
+              flex
+              items-center
+              justify-center
+              gap-2
+              py-4
+              hover:bg-accent-600
+              transition-colors
+              border-b
+              sm:border-b-0
+              sm:border-r
+              border-primary-800
+            "
+          >
+            <PencilSquareIcon className="h-5 w-5" />
+
+            <span>Edit</span>
+          </Link>
+
+          <DeleteCabin apartmentId={id} onDelete={onDelete} />
+
           <Link
             href={`/apartments/${id}`}
-            className="flex items-center gap-1 border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900 "
+            className="
+              flex
+              items-center
+              justify-center
+              gap-2
+              py-4
+              hover:bg-accent-600
+              transition-colors
+              border-t
+              sm:border-t-0
+              sm:border-l
+              border-primary-800
+            "
           >
-            Details & reservation &rarr;
+            Details →
           </Link>
         </div>
       </div>

@@ -60,7 +60,15 @@ export default function ApartmentsList({ filter }) {
   if (!apartments.length) return <p>No apartments available</p>;
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
+    <div className="
+        grid
+        grid-cols-1
+        md:grid-cols-2
+        2xl:grid-cols-3
+        gap-6
+        lg:gap-8
+        xl:gap-10
+      ">
       {displayedApartments.map((apartment) => (
         <ApartmentCard
           apartment={apartment}
