@@ -151,15 +151,16 @@ export async function getSettings() {
 }
 
 export async function getCountries() {
-  try {
-    const res = await fetch(
-      "https://restcountries.com/v2/all?fields=name,flag"
-    );
-    const countries = await res.json();
-    return countries;
-  } catch {
-    throw new Error("Could not fetch countries");
-  }
+  const res = await fetch("https://restcountries.com/api/v1/all");
+
+  const data = await res.json();
+
+  console.log(data);
+
+  return data.map(country => ({
+    name: country.name.common,
+    flag: country.flags.svg,
+  }));
 }
 
 /////////////
