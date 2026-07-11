@@ -9,50 +9,138 @@ export default async function Page({params}) {
   const { maxCapacity } = await getCabin(cabinId);
 
   return (
-    <div>
-      <h2 className="font-semibold text-2xl text-accent-400 mb-7">
-        Edit Reservation #{bookingId}
-      </h2>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-      <form action={updateReservation} className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
-        {/* to pass boookingId to action easy way */}
-        <input type="hidden" value={bookingId} name="bookingId"/>
+      <div className="mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-accent-400">
+          Edit Reservation
+        </h1>
+
+        <p className="mt-3 text-primary-300 text-base sm:text-lg">
+          Reservation #
+          <span className="font-semibold text-accent-400">
+            {" "}
+            {bookingId}
+          </span>
+        </p>
+      </div>
+
+      <form
+        action={updateReservation}
+        className="
+          bg-primary-900
+          rounded-xl
+          shadow-lg
+
+          p-5
+          sm:p-8
+          lg:p-10
+
+          flex
+          flex-col
+          gap-6
+        "
+      >
+        <input
+          type="hidden"
+          value={bookingId}
+          name="bookingId"
+        />
+
+        {/* Guests */}
 
         <div className="space-y-2">
-          <label htmlFor="numGuests">How many guests?</label>
-          <select
-            name="numGuests"
-            id="numGuests"
-            defaultValue={numGuests}
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            required
+          <label
+            htmlFor="numGuests"
+            className="font-medium"
           >
-            <option value="" key="">
-              Select number of guests...
+            Number of guests
+          </label>
+
+          <select
+            id="numGuests"
+            name="numGuests"
+            defaultValue={numGuests}
+            required
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              px-4
+              py-3
+              text-primary-900
+              shadow-sm
+
+              outline-none
+              transition
+
+              focus:ring-2
+              focus:ring-accent-500
+            "
+          >
+            <option value="">
+              Select guests...
             </option>
-            {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-              <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
+
+            {Array.from(
+              { length: maxCapacity },
+              (_, i) => i + 1
+            ).map((guest) => (
+              <option
+                key={guest}
+                value={guest}
+              >
+                {guest}{" "}
+                {guest === 1
+                  ? "guest"
+                  : "guests"}
               </option>
             ))}
           </select>
         </div>
 
+        {/* Observation */}
+
         <div className="space-y-2">
-          <label htmlFor="observation">
-            Anything we should know about your stay?
+          <label
+            htmlFor="observation"
+            className="font-medium"
+          >
+            Additional information
           </label>
+
           <textarea
-            defaultValue={observation}
+            id="observation"
             name="observation"
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+            rows={6}
+            defaultValue={observation}
+            placeholder="Special requests, allergies, pets..."
+            className="
+              w-full
+              rounded-lg
+              bg-primary-200
+              px-4
+              py-3
+              text-primary-900
+              shadow-sm
+
+              resize-none
+
+              outline-none
+              transition
+
+              focus:ring-2
+              focus:ring-accent-500
+            "
           />
         </div>
 
-        <div className="flex justify-end items-center gap-6">
-            <SubmitButton pendingLabel="Updating...">
-               Update Reservation
-            </SubmitButton>
+        {/* Submit */}
+
+        <div className="flex justify-end pt-4">
+          <SubmitButton pendingLabel="Updating reservation...">
+            Update Reservation
+          </SubmitButton>
         </div>
       </form>
     </div>
