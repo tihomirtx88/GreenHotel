@@ -8,61 +8,147 @@ export default function UserCard({ user, onDelete }) {
   const fallbackFlag = "/images/default-flag.png";
 
   return (
-    <div className="flex border-primary-800 border">
-      <div className="flex w-full">
-        <div className="pt-5 pb-4 px-7 bg-primary-950 w-3/4">
-          <h3 className="text-accent-500 font-semibold text-2xl mb-3">
-            Guest: {user?.fullName}
+      <div
+      className="
+        border
+        border-primary-800
+        rounded-xl
+        overflow-hidden
+        bg-primary-950
+        shadow-md
+      "
+    >
+      <div className="flex flex-col lg:flex-row">
+
+        {/* Information */}
+
+        <div className="flex-1 p-5 sm:p-7">
+
+          <h3 className="text-2xl sm:text-3xl font-semibold text-accent-500 mb-6">
+            {user.fullName}
           </h3>
 
-          <h3 className="text-accent-500 font-semibold text-2xl mb-3">
-            Email: {user?.email}
-          </h3>
+          <div className="space-y-4">
 
-          <div className="flex gap-3 items-center mb-2">
-            <UserIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200">
-              National ID: {user?.nationalID}
-            </p>
-          </div>
+            <InfoRow label="Email">
+              {user.email}
+            </InfoRow>
 
-          <div className="flex gap-3 items-center mb-2">
-            <UserIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200">
-              Nationality: {user?.nationality}
-            </p>
-          </div>
+            <InfoRow label="National ID">
+              {user.nationalID}
+            </InfoRow>
 
-          <div className="flex gap-3 items-center mb-2">
-            <UserIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200 flex items-center gap-2">
-              Country Flag:{" "}
+            <InfoRow label="Nationality">
+              {user.nationality}
+            </InfoRow>
+
+            <div className="flex items-center gap-3">
+              <UserIcon className="w-5 h-5 text-primary-500" />
+
+              <span className="font-medium">
+                Country:
+              </span>
+
               <Image
-                src={user?.countryFlag || fallbackFlag}
+                src={user.countryFlag || fallbackFlag}
                 alt="Country Flag"
-                width={50} 
-                height={50} 
-                className="rounded-full border border-primary-800"
+                width={36}
+                height={24}
+                className="rounded border border-primary-700"
               />
-            </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <ShieldCheckIcon className="w-5 h-5 text-primary-500" />
+
+              <span className="font-medium">
+                Role:
+              </span>
+
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                  user.admin
+                    ? "bg-green-700 text-green-100"
+                    : "bg-primary-700 text-primary-200"
+                }`}
+              >
+                {user.admin ? "Administrator" : "User"}
+              </span>
+            </div>
+
           </div>
         </div>
 
-        <div className="flex flex-col border-l border-primary-800 w-1/4">
-      
-          <>
-            <Link
-              href={`/users/edit/${user?.id}`}
-              className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
-            >
-              <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
-              <span className="mt-1">Edit</span>
-            </Link>
-            <DeleteUser userId={user?.id} onDelete={onDelete}/>
-          </>
-    
+        {/* Actions */}
+
+        <div
+          className="
+            lg:w-44
+            border-t
+            lg:border-t-0
+            lg:border-l
+            border-primary-800
+
+            flex
+            lg:flex-col
+          "
+        >
+          <Link
+            href={`/users/edit/${user.id}`}
+            className="
+              group
+              flex-1
+              flex
+              items-center
+              justify-center
+              gap-2
+
+              px-5
+              py-5
+
+              text-sm
+              uppercase
+              font-semibold
+
+              hover:bg-accent-600
+              hover:text-primary-900
+              transition
+            "
+          >
+            <PencilSquareIcon
+              className="
+                w-5
+                h-5
+                text-primary-500
+                group-hover:text-primary-900
+              "
+            />
+
+            Edit
+          </Link>
+
+          <DeleteUser
+            userId={user.id}
+            onDelete={onDelete}
+          />
+        </div>
       </div>
-      </div>
+    </div>
+  );
+}
+
+function InfoRow({ label, children }) {
+  return (
+    <div className="flex items-center gap-3">
+      <UserIcon className="w-5 h-5 text-primary-500" />
+
+      <span className="font-medium">
+        {label}:
+      </span>
+
+      <span className="text-primary-200 break-all">
+        {children}
+      </span>
     </div>
   );
 }
