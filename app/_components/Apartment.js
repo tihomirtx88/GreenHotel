@@ -14,7 +14,7 @@ export default function Apartment({ apartment }) {
   const mapContainerRef = useRef(null);
   const { name, maxCapacity, image, latitude, longitude, description } =
     apartment;
-  
+
   useEffect(() => {
     if (!mapContainerRef.current || latitude == null || longitude == null)
       return;
@@ -28,88 +28,130 @@ export default function Apartment({ apartment }) {
 
     // Create a bounds object
     const bounds = new mapboxgl.LngLatBounds();
-    const coordinates = (latitude != null && longitude != null)
-    ? [longitude, latitude]
-    : defaultCoordinates;
-    
+    const coordinates =
+      latitude != null && longitude != null
+        ? [longitude, latitude]
+        : defaultCoordinates;
 
-    const el = document.createElement('div');
-    el.className = 'marker';
-  
-    new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+    const el = document.createElement("div");
+    el.className = "marker";
+
+    new mapboxgl.Marker({ element: el, anchor: "bottom" })
       .setLngLat(coordinates)
       .addTo(map);
-  
+
     new mapboxgl.Popup({ offset: 30 })
       .setLngLat(coordinates)
       .setHTML(`<p>${name}</p>`)
       .addTo(map);
-  
+
     bounds.extend(coordinates);
-  
+
     map.fitBounds(bounds, {
       padding: { top: 50, bottom: 50, left: 50, right: 50 },
       maxZoom: 15,
     });
 
-    console.log('Map center:', map.getCenter());
-console.log('Map bounds:', map.getBounds());
-console.log('Marker coordinates:', coordinates);
-  
+    console.log("Map center:", map.getCenter());
+    console.log("Map bounds:", map.getBounds());
+    console.log("Marker coordinates:", coordinates);
+
     return () => map.remove();
   }, [latitude, longitude, name]);
 
   return (
     <>
-      <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
-        <div className="relative scale-[1.15] -translate-x-3">
+      <div
+        className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+        gap-10
+        lg:gap-16
+        border
+        border-primary-800
+        rounded-xl
+        overflow-hidden
+        bg-primary-950
+        shadow-xl
+      "
+      >
+        {/* IMAGE */}
+
+        <div className="relative h-80 lg:h-full min-h-[420px]">
           <Image
             src={image}
             alt={`Apartment ${name}`}
             fill
+            sizes="(max-width:768px)100vw,50vw"
             className="object-cover"
           />
         </div>
 
-        <div>
-          <h3 className="text-accent-100 font-black text-7xl mb-5 translate-x-[-254px] bg-primary-950 p-6 pb-1 w-[150%]">
+        {/* INFO */}
+
+        <div className="p-6 lg:p-10 flex flex-col justify-center">
+          <h1
+            className="
+            text-3xl
+            md:text-5xl
+            font-bold
+            text-accent-400
+            mb-8
+            leading-tight
+          "
+          >
             Apartment {name}
-          </h3>
+          </h1>
 
-          <p className="text-lg text-primary-300 mb-10">
+          <div className="text-primary-300 text-base lg:text-lg leading-8 mb-10">
             <TextExpander>{description}</TextExpander>
-          </p>
+          </div>
 
-          <ul className="flex flex-col gap-4 mb-7">
-            <li className="flex gap-3 items-center">
-              <UsersIcon className="h-5 w-5 text-primary-600" />
-              <span className="text-lg">
-                For up to <span className="font-bold">{maxCapacity}</span>{" "}
-                guests
+          <ul className="space-y-5">
+            <li className="flex items-center gap-4">
+              <UsersIcon className="w-6 h-6 text-accent-500" />
+
+              <span>
+                Up to <strong>{maxCapacity}</strong> guests
               </span>
             </li>
-            <li className="flex gap-3 items-center">
-              <MapPinIcon className="h-5 w-5 text-primary-600" />
-              <span className="text-lg">
-                Located at latitude:{" "}
-                <span className="font-bold">{latitude}</span> and longitude:{" "}
-                <span className="font-bold">{longitude}</span>
+
+            <li className="flex items-center gap-4">
+              <MapPinIcon className="w-6 h-6 text-accent-500" />
+
+              <span>
+                Latitude <strong>{latitude}</strong>
+                {" • "}
+                Longitude <strong>{longitude}</strong>
               </span>
             </li>
-            <li className="flex gap-3 items-center">
-              <EyeSlashIcon className="h-5 w-5 text-primary-600" />
-              <span className="text-lg">
-                Privacy <span className="font-bold">100%</span> guaranteed
-              </span>
+
+            <li className="flex items-center gap-4">
+              <EyeSlashIcon className="w-6 h-6 text-accent-500" />
+
+              <span>100% privacy guaranteed</span>
             </li>
           </ul>
         </div>
       </div>
 
-      <section className="section-map">
-        <div id="map" ref={mapContainerRef} />
-      </section>
+      {/* MAP */}
 
+      <section className="mt-16">
+        <div
+          ref={mapContainerRef}
+          className="
+            w-full
+            h-[350px]
+            md:h-[500px]
+            rounded-xl
+            overflow-hidden
+            border
+            border-primary-800
+          "
+        />
+      </section>
     </>
   );
 }
