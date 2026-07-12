@@ -35,6 +35,12 @@ export async function getCabinPrice(id) {
 }
 
 export const getCabins = async function () {
+   console.log("SUPABASE URL =", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log(
+    "SUPABASE KEY =",
+    process.env.NEXT_PUBLIC_SUPABASE_KEY?.slice(0, 20)
+  );
+  
   const { data, error } = await supabase
     .from("cabins")
     .select(
