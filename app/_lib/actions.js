@@ -182,8 +182,6 @@ export async function createUser(formData) {
     admin: formData.get("admin"),
   };
 
-  console.log(newUser);
-
 
   await createGuest(newUser);
   revalidatePath("/users");

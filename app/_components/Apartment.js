@@ -52,9 +52,6 @@ export default function Apartment({ apartment }) {
       maxZoom: 15,
     });
 
-    console.log("Map center:", map.getCenter());
-    console.log("Map bounds:", map.getBounds());
-    console.log("Marker coordinates:", coordinates);
 
     return () => map.remove();
   }, [latitude, longitude, name]);

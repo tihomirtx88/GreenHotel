@@ -40,7 +40,7 @@ export const getCabins = async function () {
     "SUPABASE KEY =",
     process.env.NEXT_PUBLIC_SUPABASE_KEY?.slice(0, 20)
   );
-  
+
   const { data, error } = await supabase
     .from("cabins")
     .select(
@@ -48,8 +48,7 @@ export const getCabins = async function () {
     )
     .order("name");
 
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
+
 
   // await new Promise((res) => setTimeout(res, 1000));
 
@@ -224,7 +223,7 @@ export async function createCabin(newCabin) {
   const { data, error } = await query.select().single();
 
   if (error) {
-    console.log("INSERT ERROR:");
+
     console.dir(error, { depth: null });
     throw error;
   }
@@ -240,7 +239,7 @@ export async function createCabin(newCabin) {
   //3. Delete the cabin IF there was an error uplaoding image
   if (storageError) {
     await supabase.from("cabins").delete().eq("id", data.id);
-    console.log("STORAGE ERROR:");
+
     console.dir(storageError, { depth: null });
     throw storageError;
   }

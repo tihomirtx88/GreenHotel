@@ -5,7 +5,7 @@ import { SubmitButton } from "./SubmitButton";
 
 export default function  UpdateUser({currentUser, userId}) {
     const { fullName, email, id, nationalID, nationality, countryFlag, admin } = currentUser;
-    console.log(userId);
+
     
     return(
           <form
