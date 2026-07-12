@@ -160,7 +160,7 @@ export default function UserForm() {
           name="countryFlag"
           type="url"
           required
-          placeholder="https://..."
+          placeholder="https://flagcdn.com/...svg"
           className="
             w-full
             rounded-lg

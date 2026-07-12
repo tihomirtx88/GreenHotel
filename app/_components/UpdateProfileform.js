@@ -97,8 +97,9 @@ export default function UpdateProfileForm({ quest, children }) {
             Where are you from?
           </label>
 
-          {countryFlag && (
+          {/* {countryFlag && (
             <img
+              id="country-flag-preview"
               src={countryFlag}
               alt="Country flag"
               className="
@@ -109,7 +110,7 @@ export default function UpdateProfileForm({ quest, children }) {
                 border-primary-700
               "
             />
-          )}
+          )} */}
         </div>
 
         {children}

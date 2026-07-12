@@ -41,14 +41,34 @@ export default function UserCard({ user, onDelete }) {
               <UserIcon className="w-5 h-5 text-primary-500" />
 
               <span className="font-medium">Country:</span>
+              
 
-              <Image
-                src={user.countryFlag || fallbackFlag}
-                alt="Country Flag"
-                width={36}
-                height={24}
-                className="rounded border border-primary-700"
-              />
+             {user.countryFlag?.startsWith("http") ? (
+  <Image
+    src={user.countryFlag}
+    alt="Country Flag"
+    width={36}
+    height={24}
+    className="rounded border border-primary-700"
+  />
+) : (
+  <div
+    className="
+      flex
+      items-center
+      justify-center
+      w-9
+      h-7
+      rounded
+      border
+      border-primary-700
+      bg-primary-900
+      text-xl
+    "
+  >
+    {user.countryFlag || "🏳️"}
+  </div>
+)}
             </div>
 
             <div className="flex items-center gap-3">

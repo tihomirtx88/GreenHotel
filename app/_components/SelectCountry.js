@@ -1,25 +1,44 @@
-import { getCountries } from '@/app/_lib/data-service';
+"use client";
 
-async function SelectCountry({ defaultCountry, name, id, className }) {
-  const countries = await getCountries();
-  const flag =
-    countries.find((country) => country.name === defaultCountry)?.flag ?? '';
+import { useEffect, useState } from "react";
+
+export default function SelectCountry({
+  countries,
+  defaultCountry,
+  defaultFlag,
+  name,
+  id,
+  className,
+}) {
+  const [selectedFlag, setSelectedFlag] = useState(defaultFlag);
+
+  useEffect(() => {
+    const img = document.getElementById("country-flag-preview");
+
+    if (img) img.src = selectedFlag;
+  }, [selectedFlag]);
 
   return (
     <select
       name={name}
       id={id}
-      defaultValue={`${defaultCountry}%${flag}`}
+      defaultValue={`${defaultCountry}%${defaultFlag}`}
       className={className}
+      onChange={(e) => {
+        const [, flag] = e.target.value.split("%");
+        setSelectedFlag(flag);
+      }}
     >
-      <option value=''>Select country...</option>
-      {countries.map((c) => (
-        <option key={c.name} value={`${c.name}%${c.flag}`}>
-          {c.name}
+      <option value="">Select country...</option>
+
+      {countries.map((country) => (
+        <option
+          key={country.name}
+          value={`${country.name}%${country.flag}`}
+        >
+          {country.name}
         </option>
       ))}
     </select>
   );
 }
-
-export default SelectCountry;
