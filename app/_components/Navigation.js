@@ -4,7 +4,10 @@ import Image from "next/image";
 import { getGuest } from "../_lib/data-service";
 
 export default async function Navigation() {
+
   const session = await auth();
+
+  let guest = null;
 
   if (session?.user?.email) {
     guest = await getGuest(session.user.email);

@@ -9,16 +9,14 @@ export const metadata = {
 export default async function Page() {
   const session = await auth();
 
-  if (!session) redirect("/login");
+  let guest = null;
 
-  const guest = await getGuest(session.user.email);
-
-  if (!guest?.admin) redirect("/");
-
+  if (session?.user?.email) {
+    guest = await getGuest(session.user.email);
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
-
       <div className="mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-accent-400">
           Welcome back,
@@ -34,7 +32,6 @@ export default async function Page() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
         <div className="rounded-xl border border-primary-800 bg-primary-900 p-6 shadow-md">
           <h3 className="text-xl font-semibold text-accent-500 mb-2">
             Apartments
@@ -56,17 +53,13 @@ export default async function Page() {
         </div>
 
         <div className="rounded-xl border border-primary-800 bg-primary-900 p-6 shadow-md">
-          <h3 className="text-xl font-semibold text-accent-500 mb-2">
-            Users
-          </h3>
+          <h3 className="text-xl font-semibold text-accent-500 mb-2">Users</h3>
 
           <p className="text-primary-300">
             Add new users and manage existing accounts.
           </p>
         </div>
-
       </div>
-
     </div>
   );
 }
