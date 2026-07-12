@@ -6,12 +6,13 @@ import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
 
 function isAlreadyBooked(range, datesArr) {
-  return (
-    range.from &&
-    range.to &&
-    datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to })
-    )
+  if (!range?.from || !range?.to) return false;
+
+  return datesArr.some((date) =>
+    isWithinInterval(date, {
+      start: range.from,
+      end: range.to,
+    })
   );
 }
 
@@ -19,13 +20,14 @@ export default function DateSelector({settings, bookedDates, apartment}) {
   
   const { range, setRange, resetRange} = useReservation();
 
-  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+  const displayRange =
+  isAlreadyBooked(range, bookedDates) ? {} : range ?? {};
 
   const { regularPrice, discount } = apartment;
 
   const { minBokkingLength, maxBookingLength } = settings;
 
-  const months = typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 2;
+  const months = 2;
 
   const numNights =
   displayRange.from && displayRange.to
@@ -142,7 +144,7 @@ export default function DateSelector({settings, bookedDates, apartment}) {
           ) : null}
         </div>
 
-        {(range.from || range.to) && (
+        {(range?.from || range?.to) && (
           <button
             onClick={resetRange}
             className="
