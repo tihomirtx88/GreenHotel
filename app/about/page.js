@@ -115,6 +115,7 @@ export default async function Page() {
             Join us and experience authentic hospitality surrounded by the
             breathtaking beauty of the Italian Dolomites.
           </p>
+          
 
           <div className="pt-2">
             <a
