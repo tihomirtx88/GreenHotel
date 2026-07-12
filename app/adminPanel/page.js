@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import { auth } from "../_lib/auth";
+import { getGuest } from "../_lib/data-service";
 
 export const metadata = {
   title: "Admin panel page",
@@ -6,6 +8,13 @@ export const metadata = {
 
 export default async function Page() {
   const session = await auth();
+
+  if (!session) redirect("/login");
+
+  const guest = await getGuest(session.user.email);
+
+  if (!guest?.admin) redirect("/");
+
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">

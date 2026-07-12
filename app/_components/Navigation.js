@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
 import Image from "next/image";
+import { getGuest } from "../_lib/data-service";
 
 export default async function Navigation() {
   const session = await auth();
 
+  if (session?.user?.email) {
+    guest = await getGuest(session.user.email);
+  }
+
   return (
-     <nav className="z-20">
+    <nav className="z-20">
       <ul className="flex items-center gap-3 sm:gap-5 lg:gap-8 text-sm sm:text-base lg:text-lg font-medium">
         <li>
           <Link
@@ -42,33 +47,31 @@ export default async function Navigation() {
               />
             )}
 
-            <span className="hidden sm:inline">
-              Guest Area
-            </span>
+            <span className="hidden sm:inline">Guest Area</span>
           </Link>
         </li>
 
-        <li>
-          <Link
-            href="/adminPanel"
-            className="flex items-center gap-2 sm:gap-3 transition-colors hover:text-accent-400"
-          >
-            {session?.user?.image && (
-              <Image
-                src={session.user.image}
-                alt={session.user.name}
-                width={36}
-                height={36}
-                className="rounded-full border border-primary-700"
-                referrerPolicy="no-referrer"
-              />
-            )}
+        {guest?.admin && (
+          <li>
+            <Link
+              href="/adminPanel"
+              className="flex items-center gap-2 sm:gap-3 transition-colors hover:text-accent-400"
+            >
+              {session?.user?.image && (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name}
+                  width={36}
+                  height={36}
+                  className="rounded-full border border-primary-700"
+                  referrerPolicy="no-referrer"
+                />
+              )}
 
-            <span className="hidden lg:inline">
-              Admin Area
-            </span>
-          </Link>
-        </li>
+              <span className="hidden lg:inline">Admin Area</span>
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
