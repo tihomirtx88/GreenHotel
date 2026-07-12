@@ -5,7 +5,7 @@ import UserCard from "./UserCard";
 import { fetchAllUsers } from "../_lib/data-service";
 import { deleteUser } from "../_lib/actions";
 
-export default function UsersList({ search }) {
+export default function UsersList({ search, sort }) {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
 
