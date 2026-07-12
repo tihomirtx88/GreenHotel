@@ -37,10 +37,12 @@ export async function getCabinPrice(id) {
 export const getCabins = async function () {
   const { data, error } = await supabase
     .from("cabins")
-    .select("id, name, maxCapacity, regularPrice, discount, image, latitude, longitude")
+    .select(
+      "id, name, maxCapacity, regularPrice, discount, image, latitude, longitude",
+    )
     .order("name");
 
-      console.log("DATA:", data);
+  console.log("DATA:", data);
   console.log("ERROR:", error);
 
   // await new Promise((res) => setTimeout(res, 1000));
@@ -96,7 +98,7 @@ export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numNight, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
+      "id, created_at, startDate, endDate, numNight, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
     )
     .eq("guestId", guestId)
     .order("startDate");
@@ -199,7 +201,7 @@ export async function createCabin(newCabin) {
   //CReating image name adn replace with one server will create
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
-    ""
+    "",
   );
 
   const imagePath = hasImagePath
@@ -214,7 +216,6 @@ export async function createCabin(newCabin) {
 
   // With select and single will return the object from database
   const { data, error } = await query.select().single();
-
 
   if (error) {
     console.log("INSERT ERROR:");
@@ -233,9 +234,9 @@ export async function createCabin(newCabin) {
   //3. Delete the cabin IF there was an error uplaoding image
   if (storageError) {
     await supabase.from("cabins").delete().eq("id", data.id);
-      console.log("STORAGE ERROR:");
-  console.dir(storageError, { depth: null });
-  throw storageError;
+    console.log("STORAGE ERROR:");
+    console.dir(storageError, { depth: null });
+    throw storageError;
   }
 
   return data;
@@ -328,19 +329,28 @@ export async function deleteGuest(id) {
   return data;
 }
 
-export async function fetchAllUsers(page = 1, limit = 8, search = "") {
+export async function fetchAllUsers(
+  page = 1,
+  limit = 8,
+  search = "",
+  role = "all",
+) {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
-  let query = supabase
-    .from("guests")
-    .select("*");
+  let query = supabase.from("guests").select("*");
 
   if (search) {
     query = query.or(
-      `fullName.ilike.%${search}%,email.ilike.%${search}%,nationality.ilike.%${search}%`
+      `fullName.ilike.%${search}%,email.ilike.%${search}%,nationality.ilike.%${search}%`,
     );
   }
+
+  if (role !== "all") {
+    query = query.eq("admin", role);
+  }
+
+ 
 
   const { data, error } = await query.range(start, end);
 

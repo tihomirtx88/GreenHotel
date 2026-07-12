@@ -5,7 +5,7 @@ import UserCard from "./UserCard";
 import { fetchAllUsers } from "../_lib/data-service";
 import { deleteUser } from "../_lib/actions";
 
-export default function UsersList({ search, sort }) {
+export default function UsersList({ search, sort, role }) {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -17,7 +17,7 @@ export default function UsersList({ search, sort }) {
       setIsLoading(true);
 
       try {
-        const data = await fetchAllUsers(page, 10, search);
+        const data = await fetchAllUsers(page, 10, search, role);
 
         if (page === 1) {
           setUsers(data);
@@ -41,7 +41,7 @@ export default function UsersList({ search, sort }) {
     }
 
     loadUsers();
-  }, [page, search]);
+  }, [page, search, role]);
 
   function loadMore() {
     if (!isLoading && hasMore) {

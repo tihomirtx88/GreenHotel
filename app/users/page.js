@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import UsersList from "../_components/UsersList";
 import Spinner from "../_components/Spinner";
 import Search from "../_components/Search";
-import Sort from "../_components/Sort";
+import RoleFilter from "../_components/RoleFilter";
 
 export const metadata = {
   title: "Creating user",
@@ -11,6 +11,7 @@ export const metadata = {
 export default async function Page({ searchParams }) {
   const search = searchParams?.search ?? "";
   const sort = searchParams?.sort ?? "";
+  const role = searchParams?.role ?? "all";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -29,29 +30,10 @@ export default async function Page({ searchParams }) {
 
       {/* Users */}
 
-      <div className="flex justify-end mb-8">
-        <Search placeholder="Search users..." />
-      </div>
-
-      <div className="flex flex-col gap-4 md:flex-row md:justify-between mb-8">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-8">
         <Search placeholder="Search users..." />
 
-        <Sort
-          options={[
-            {
-              value: "name-asc",
-              label: "Name A-Z",
-            },
-            {
-              value: "name-desc",
-              label: "Name Z-A",
-            },
-            {
-              value: "email",
-              label: "Email",
-            },
-          ]}
-        />
+        <RoleFilter />
       </div>
 
       <Suspense
@@ -61,7 +43,7 @@ export default async function Page({ searchParams }) {
           </div>
         }
       >
-        <UsersList search={search} sort={sort}/>
+        <UsersList search={search} sort={sort} role={role} />
       </Suspense>
     </div>
   );

@@ -138,7 +138,7 @@ export default function Apartment({ apartment }) {
 
       {/* MAP */}
 
-      <section className="mt-16">
+      {/* <section className="mt-16">
         <div
           ref={mapContainerRef}
           className="
@@ -151,7 +151,7 @@ export default function Apartment({ apartment }) {
             border-primary-800
           "
         />
-      </section>
+      </section> */}
     </>
   );
 }

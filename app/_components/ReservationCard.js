@@ -1,8 +1,9 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
-import DeleteReservation from "./DeleteReservation";
 import Image from "next/image";
 import Link from "next/link";
+
+import DeleteReservation from "./DeleteReservation";
 
 export const formatDistanceFromNow = (dateStr) =>
   formatDistance(parseISO(dateStr), new Date(), {
@@ -12,16 +13,16 @@ export const formatDistanceFromNow = (dateStr) =>
 function ReservationCard({ booking, onDelete }) {
   const {
     id,
-    guestId,
     startDate,
     endDate,
     numNight,
     numGuests,
     totalPrice,
-    status,
     created_at,
     cabins: { name, image },
   } = booking;
+
+  const past = isPast(new Date(startDate));
 
   return (
     <div
@@ -51,7 +52,7 @@ function ReservationCard({ booking, onDelete }) {
       >
         <Image
           src={image}
-          alt={`Cabin ${name}`}
+          alt={`Apartment ${name}`}
           fill
           className="object-cover"
         />
@@ -71,7 +72,7 @@ function ReservationCard({ booking, onDelete }) {
           "
         >
           <h3 className="text-xl md:text-2xl font-semibold">
-            {numNight} nights in Apartment {name}
+            {numNight} night{numNight > 1 ? "s" : ""} in Apartment {name}
           </h3>
 
           <span
@@ -111,12 +112,10 @@ function ReservationCard({ booking, onDelete }) {
             ${totalPrice}
           </p>
 
-          <p className="hidden md:block text-primary-500">
-            •
-          </p>
+          <span className="hidden md:block text-primary-500">•</span>
 
           <p className="text-primary-300">
-            {numGuests} Guest{numGuests > 1 && "s"}
+            {numGuests} Guest{numGuests > 1 ? "s" : ""}
           </p>
 
           <p className="md:ml-auto text-sm text-primary-500">
@@ -149,8 +148,8 @@ function ReservationCard({ booking, onDelete }) {
             className="
               flex-1
               flex
-              justify-center
               items-center
+              justify-center
               gap-2
               px-5
               py-4
@@ -160,15 +159,14 @@ function ReservationCard({ booking, onDelete }) {
               border-primary-800
               hover:bg-accent-600
               hover:text-primary-900
-              transition
+              transition-all
             "
           >
             <PencilSquareIcon className="w-5 h-5" />
-
             <span>Edit</span>
           </Link>
 
-          <div className="flex-1 flex">
+          <div className="flex-1">
             <DeleteReservation
               bookingId={id}
               onDelete={onDelete}

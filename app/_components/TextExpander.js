@@ -1,15 +1,21 @@
-"use client"
-import { useState } from 'react';
+"use client";
+
+import { useState } from "react";
 
 function TextExpander({ children }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const displayText = isExpanded
-    ? children
-    : children?.toString().split(' ').slice(0, 40).join(' ') + (children ? '...' : '');
+  const words = children?.toString().split(" ") ?? [];
+
+  const shouldCollapse = words.length > 40;
+
+  const displayText =
+    isExpanded || !shouldCollapse
+      ? children
+      : words.slice(0, 40).join(" ") + "...";
 
   return (
-     <div className="space-y-3">
+    <div className="space-y-3">
       <p
         className="
           text-primary-300
