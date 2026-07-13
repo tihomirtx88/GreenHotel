@@ -40,7 +40,7 @@ function ApartmentCard({ apartment, onDelete }) {
         "
       >
         <Image
-          src={image}
+          src={image || "/placeholder.jpg"}
           alt={`Apartment ${name}`}
           fill
           priority={false}
